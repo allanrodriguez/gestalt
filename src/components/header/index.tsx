@@ -10,6 +10,7 @@ import {
 import { Menu } from "@material-ui/icons";
 
 interface HeaderProps {
+  cropButtonDisabled?: boolean;
   drawer?: boolean;
 }
 
@@ -41,7 +42,9 @@ export default function Header(props: HeaderProps): JSX.Element {
         <Typography className={classes.title} variant="h6">
           Gestalt
         </Typography>
-        <Button color="inherit">Crop</Button>
+        <Button color="inherit" disabled={props.cropButtonDisabled}>
+          Crop
+        </Button>
       </Toolbar>
     </AppBar>
   );

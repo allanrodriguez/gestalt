@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import Header from "./header";
+import Header from "../header";
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -17,7 +17,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
         />
       </Helmet>
       <header>
-        <Header drawer={props.drawer} />
+        <Header cropButtonDisabled drawer={props.drawer} />
       </header>
       <main>{props.children}</main>
     </>
