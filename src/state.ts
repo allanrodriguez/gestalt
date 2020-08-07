@@ -1,11 +1,18 @@
-import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
-import headerReducer from "./components/header/header-slice"
+import {
+  Action,
+  ThunkAction,
+  combineReducers,
+  configureStore,
+} from "@reduxjs/toolkit";
+import headerReducer from "./components/header/header-slice";
 
-export const store = configureStore({
-  reducer: {
-    header: headerReducer,
-  },
+export const reducer = combineReducers({
+  header: headerReducer,
 });
+
+export const store = configureStore({ reducer });
+
+export const initialState = store.getState();
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
