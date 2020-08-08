@@ -9,15 +9,32 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "jest"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@reduxjs/toolkit": "^1.4.0",
     "gatsby": "^2.24.23",
+    "gatsby-plugin-material-ui": "^2.1.10",
+    "gatsby-plugin-react-helmet-async": "^1.0.17-0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-helmet-async": "^1.0.6",
+    "react-redux": "^7.2.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.2",
+    "@testing-library/react": "^10.4.7",
+    "@types/react-redux": "^7.1.9",
+    "babel-jest": "^26.2.2",
+    "babel-preset-gatsby": "^0.5.4",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.2.2",
     "prettier": "2.0.5"
+  },
+  "resolutions": {
+    "lodash": "^4.17.19"
   },
   "repository": {
     "type": "git"
