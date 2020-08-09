@@ -4,7 +4,7 @@ import Header from "../header";
 
 interface LayoutProps {
   children?: React.ReactNode;
-  drawer?: boolean;
+  drawer?: React.ReactNode;
 }
 
 export default function Layout(props: LayoutProps): JSX.Element {
@@ -17,8 +17,9 @@ export default function Layout(props: LayoutProps): JSX.Element {
         />
       </Helmet>
       <header>
-        <Header cropButtonDisabled drawer={props.drawer} />
+        <Header drawer={props.drawer && true} />
       </header>
+      <nav>{props.drawer}</nav>
       <main>{props.children}</main>
     </>
   );

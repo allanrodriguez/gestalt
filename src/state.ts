@@ -4,9 +4,11 @@ import {
   combineReducers,
   configureStore,
 } from "@reduxjs/toolkit";
+import drawerReducer from "./components/monitor-drawer/monitor-drawer-slice";
 import headerReducer from "./components/header/header-slice";
 
 export const reducer = combineReducers({
+  drawer: drawerReducer,
   header: headerReducer,
 });
 
