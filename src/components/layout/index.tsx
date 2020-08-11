@@ -16,10 +16,8 @@ export default function Layout(props: LayoutProps): JSX.Element {
           rel="stylesheet"
         />
       </Helmet>
-      <header>
-        <Header drawer={props.drawer && true} />
-      </header>
-      <nav>{props.drawer}</nav>
+      <Header drawer={props.drawer && true} />
+      {props.drawer}
       <main>{props.children}</main>
     </>
   );
