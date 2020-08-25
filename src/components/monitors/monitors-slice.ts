@@ -82,6 +82,10 @@ export function selectMonitor(id: string): (state: RootState) => Monitor {
   return (state: RootState) => state.monitors.byId[id];
 }
 
+export function selectMonitorIds(state: RootState): string[] {
+  return state.monitors.ids;
+}
+
 export const {
   addMonitor,
   removeMonitor,

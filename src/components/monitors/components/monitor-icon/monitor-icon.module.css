@@ -1,0 +1,20 @@
+svg {
+  height: 40px;
+  width: 40px;
+}
+
+.base {
+  fill: #3c474b;
+}
+
+.border {
+  fill: #536267;
+}
+
+.neck {
+  fill: #485559;
+}
+
+.screen {
+  fill: #007fff;
+}

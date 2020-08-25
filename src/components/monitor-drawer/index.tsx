@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Drawer, Fab, Typography, makeStyles } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { closeDrawer, selectDrawerOpen } from "./monitor-drawer-slice";
+import Monitors from "../monitors";
+import { addMonitor } from "../monitors/monitors-slice";
 
 interface MonitorDrawerProps {
   children?: React.ReactNode;
@@ -18,9 +20,12 @@ const useStyles = makeStyles((theme) => ({
     left: theme.spacing(2),
   },
   drawer: {
-    width: 256,
     backgroundColor: theme.palette.secondary.main,
-    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    flexGrow: 1,
+    minHeight: 0,
+    width: 320,
   },
   header: {
     alignItems: "center",
@@ -32,7 +37,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(8),
   },
   list: {
+    flexGrow: 1,
     marginTop: theme.spacing(4),
+    maxWidth: 320,
+    minHeight: 0,
+    overflow: "auto",
   },
 }));
 
@@ -42,6 +51,7 @@ export default function MonitorDrawer(props: MonitorDrawerProps): JSX.Element {
   const isDrawerOpen = useSelector(selectDrawerOpen);
 
   const onDrawerClose = () => dispatch(closeDrawer());
+  const onFabClick = () => dispatch(addMonitor());
 
   return (
     <Drawer open={isDrawerOpen} onClose={onDrawerClose}>
@@ -51,11 +61,13 @@ export default function MonitorDrawer(props: MonitorDrawerProps): JSX.Element {
             Monitors
           </Typography>
 
-          <Fab className={classes.addButton} size="small">
+          <Fab className={classes.addButton} size="small" onClick={onFabClick}>
             <Add />
           </Fab>
         </div>
-        <div className={classes.list}>Hello</div>
+        <div className={classes.list}>
+          <Monitors />
+        </div>
       </div>
     </Drawer>
   );
