@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   IconButton,
@@ -7,55 +7,75 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   TextField,
-  makeStyles,
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import MonitorIcon from "../monitor-icon";
-import { selectMonitor, removeMonitor } from "../../monitors-slice";
+import {
+  selectMonitor,
+  removeMonitor,
+  setMonitorWidth,
+  setMonitorHeight,
+} from "../../monitors-slice";
+import styles from "./monitor.module.css";
 
 interface MonitorProps {
   id: string;
 }
 
-const useStyles = makeStyles((theme) => ({
-  diagonalContainer: {
-    display: "flex",
-    alignItems: "baseline",
-    paddingTop: theme.spacing(1),
-  },
-  dimensionsContainer: {
-    display: "flex",
-    alignItems: "baseline",
-
-    // transition
-  },
-}));
-
 export default function Monitor(props: MonitorProps): JSX.Element {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const monitor = useSelector(selectMonitor(props.id));
 
   const onCloseButtonClick = () => dispatch(removeMonitor(props.id));
+  const onWidthChange = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) =>
+    dispatch(
+      setMonitorWidth({
+        id: props.id,
+        widthPixels: parseInt(e.target.value),
+      })
+    );
+  const onHeightChange = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) =>
+    dispatch(
+      setMonitorHeight({
+        id: props.id,
+        heightPixels: parseInt(e.target.value),
+      })
+    );
 
   return (
-    <ListItem>
+    <ListItem divider>
       <ListItemIcon>
         <MonitorIcon id={props.id} />
       </ListItemIcon>
 
       <ListItemText>
-        Resolution (pixels)
-        <div className={classes.dimensionsContainer}>
-          <TextField label="Width" size="small" />
-          &nbsp;
-          <Close fontSize="small" />
-          &nbsp;
-          <TextField label="Height" size="small" />
-        </div>
-        <div className={classes.diagonalContainer}>
-          <TextField label="Diagonal" size="small" />
-          &nbsp;in.
+        <div className={styles.formContainer}>
+          <TextField
+            className={styles.width}
+            label="Width"
+            size="small"
+            onBlur={onWidthChange}
+          />
+          <div className={styles.x}>
+            <Close fontSize="small" />
+          </div>
+          <TextField
+            className={styles.height}
+            label="Height"
+            size="small"
+            onBlur={onHeightChange}
+          />
+          <span className={styles.pixels}>pixels</span>
+          <TextField
+            className={styles.diagonal}
+            label="Diagonal"
+            size="small"
+          />
+          <span className={styles.inches}>inches</span>
         </div>
       </ListItemText>
 

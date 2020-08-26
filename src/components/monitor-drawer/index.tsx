@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     flexGrow: 1,
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(2),
     maxWidth: 320,
     minHeight: 0,
     overflow: "auto",
