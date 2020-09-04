@@ -2,9 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Drawer, Fab, Typography, makeStyles } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
-import { closeDrawer, selectDrawerOpen } from "./monitor-drawer-slice";
 import Monitors from "../monitors";
-import { addMonitor } from "../monitors/monitors-slice";
+import MonitorDetailsDialog from "../monitor-details-dialog";
+import { openDialog } from "../monitor-details-dialog/monitor-details-dialog-slice";
+import { closeDrawer, selectDrawerOpen } from "./monitor-drawer-slice";
 
 interface MonitorDrawerProps {
   children?: React.ReactNode;
@@ -51,10 +52,11 @@ export default function MonitorDrawer(props: MonitorDrawerProps): JSX.Element {
   const isDrawerOpen = useSelector(selectDrawerOpen);
 
   const onDrawerClose = () => dispatch(closeDrawer());
-  const onFabClick = () => dispatch(addMonitor());
+  const onFabClick = () => dispatch(openDialog("add"));
 
   return (
     <Drawer open={isDrawerOpen} onClose={onDrawerClose}>
+      <MonitorDetailsDialog />
       <div className={classes.drawer} role="presentation">
         <div className={classes.header}>
           <Typography className={classes.headerText} variant="h6">
