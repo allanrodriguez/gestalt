@@ -1,17 +1,16 @@
 import React from "react";
 import { makeStyles, Theme } from "@material-ui/core";
-import { Monitor } from "../../../../common/models";
+import { Monitor } from "../../common/models";
 
 interface MonitorIconProps {
   width: number;
-  height: number;
   monitor: Monitor;
 }
 
 const useStyles = makeStyles<Theme, MonitorIconProps>((theme) => ({
   svg: {
     height: (props) => props.width,
-    width: (props) => props.height,
+    width: (props) => props.width,
   },
   base: {
     fill: "#3c474b",

@@ -17,7 +17,7 @@ import {
   selectDialogOpen,
   selectDialogType,
 } from "./monitor-details-dialog-slice";
-import MonitorIcon from "../monitors/components/monitor-icon";
+import MonitorIcon from "../monitor-icon";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -54,7 +54,12 @@ export default function MonitorDetailsDialog(): JSX.Element {
     <Dialog classes={{ paper: classes.dialog }} open={isOpen} onClose={onClose}>
       <DialogTitle>{`${type} monitor`}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{/* <MonitorIcon /> */}</DialogContentText>
+        <DialogContentText>
+          <MonitorIcon
+            width={160}
+            monitor={{ widthPixels: 0, heightPixels: 0, diagonalInches: 0 }}
+          />
+        </DialogContentText>
         <TextField
           autoFocus
           label="Diagonal width"

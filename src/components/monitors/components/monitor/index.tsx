@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
-import MonitorIcon from "../monitor-icon";
+import MonitorIcon from "../../../monitor-icon";
 import {
   selectMonitor,
   removeMonitor,
@@ -49,7 +49,7 @@ export default function Monitor(props: MonitorProps): JSX.Element {
   return (
     <ListItem divider>
       <ListItemIcon>
-        <MonitorIcon width={40} height={40} monitor={monitor} />
+        <MonitorIcon width={40} monitor={monitor} />
       </ListItemIcon>
 
       <ListItemText>
