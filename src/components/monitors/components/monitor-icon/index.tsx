@@ -1,11 +1,31 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectMonitor } from "../../monitors-slice";
-import styles from "./monitor-icon.module.css";
+import { makeStyles, Theme } from "@material-ui/core";
+import { Monitor } from "../../../../common/models";
 
 interface MonitorIconProps {
-  id: string;
+  width: number;
+  height: number;
+  monitor: Monitor;
 }
+
+const useStyles = makeStyles<Theme, MonitorIconProps>((theme) => ({
+  svg: {
+    height: (props) => props.width,
+    width: (props) => props.height,
+  },
+  base: {
+    fill: "#3c474b",
+  },
+  border: {
+    fill: "#536267",
+  },
+  neck: {
+    fill: "#485559",
+  },
+  screen: {
+    fill: "#007fff",
+  },
+}));
 
 function calculatePpi(
   widthPixels: number,
@@ -21,11 +41,11 @@ function calculatePpi(
 }
 
 export default function MonitorIcon(props: MonitorIconProps): JSX.Element {
-  const monitor = useSelector(selectMonitor(props.id));
+  const classes = useStyles(props);
 
-  const width = monitor.widthPixels || 800;
-  const height = monitor.heightPixels || 600;
-  const diagonal = monitor.diagonalInches || 20;
+  const width = props.monitor.widthPixels || 800;
+  const height = props.monitor.heightPixels || 600;
+  const diagonal = props.monitor.diagonalInches || 20;
 
   const ppi = calculatePpi(width, height, diagonal);
 
@@ -45,21 +65,24 @@ export default function MonitorIcon(props: MonitorIconProps): JSX.Element {
   const viewBoxHeight = monitorHeight + baseColumnHeight + baseHeight / 2;
 
   return (
-    <svg viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
+    <svg
+      className={classes.svg}
+      viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+    >
       <rect
-        className={styles.border}
+        className={classes.border}
         width={monitorWidth}
         height={monitorHeight}
       />
       <rect
-        className={styles.screen}
+        className={classes.screen}
         x={borderWidth}
         y={borderWidth}
         width={width}
         height={height}
       />
       <path
-        className={styles.base}
+        className={classes.base}
         d={`M ${(monitorWidth - baseBottomWidth) / 2} ${viewBoxHeight} L ${
           (monitorWidth - baseTopWidth) / 2
         } ${viewBoxHeight - baseHeight} h ${baseTopWidth} L ${
@@ -67,7 +90,7 @@ export default function MonitorIcon(props: MonitorIconProps): JSX.Element {
         } ${viewBoxHeight} Z`}
       />
       <rect
-        className={styles.neck}
+        className={classes.neck}
         x={(monitorWidth - baseColumnWidth) / 2}
         y={monitorHeight}
         width={baseColumnWidth}

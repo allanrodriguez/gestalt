@@ -1,11 +1,6 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
+import { Monitor } from "../../common/models";
 import { RootState } from "../../state";
-
-interface Monitor {
-  widthPixels: number;
-  heightPixels: number;
-  diagonalInches: number;
-}
 
 interface MonitorsState {
   selectedId: string;

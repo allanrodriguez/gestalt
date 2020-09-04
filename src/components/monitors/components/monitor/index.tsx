@@ -49,7 +49,7 @@ export default function Monitor(props: MonitorProps): JSX.Element {
   return (
     <ListItem divider>
       <ListItemIcon>
-        <MonitorIcon id={props.id} />
+        <MonitorIcon width={40} height={40} monitor={monitor} />
       </ListItemIcon>
 
       <ListItemText>
