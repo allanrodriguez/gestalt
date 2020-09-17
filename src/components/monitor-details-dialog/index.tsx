@@ -23,6 +23,15 @@ const useStyles = makeStyles((theme) => ({
   dialog: {
     backgroundColor: theme.palette.secondary.main,
   },
+  allDimensionsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    width: "15rem",
+  },
+  monitorIcon: {
+    display: "flex",
+    justifyContent: "center",
+  },
   pixelDimensionsContainer: {
     display: "flex",
   },
@@ -55,37 +64,45 @@ export default function MonitorDetailsDialog(): JSX.Element {
       <DialogTitle>{`${type} monitor`}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <MonitorIcon
-            width={160}
-            monitor={{ widthPixels: 0, heightPixels: 0, diagonalInches: 0 }}
-          />
+          <div className={classes.monitorIcon}>
+            <MonitorIcon
+              width={160}
+              monitor={{ widthPixels: 0, heightPixels: 0, diagonalInches: 0 }}
+            />
+          </div>
         </DialogContentText>
-        <TextField
-          autoFocus
-          label="Diagonal width"
-          fullWidth
-          InputProps={{
-            endAdornment: <InputAdornment position="end">in</InputAdornment>,
-          }}
-        />
-        <div className={classes.pixelDimensionsContainer}>
+        <div className={classes.allDimensionsContainer}>
           <TextField
-            margin="dense"
-            label="Width"
+            autoFocus
+            label="Diagonal width"
             fullWidth
             InputProps={{
-              endAdornment: <InputAdornment position="end">px</InputAdornment>,
+              endAdornment: <InputAdornment position="end">in</InputAdornment>,
             }}
           />
-          <Close className={classes.x} />
-          <TextField
-            margin="dense"
-            label="Height"
-            fullWidth
-            InputProps={{
-              endAdornment: <InputAdornment position="end">px</InputAdornment>,
-            }}
-          />
+          <div className={classes.pixelDimensionsContainer}>
+            <TextField
+              margin="dense"
+              label="Width"
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">px</InputAdornment>
+                ),
+              }}
+            />
+            <Close className={classes.x} />
+            <TextField
+              margin="dense"
+              label="Height"
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">px</InputAdornment>
+                ),
+              }}
+            />
+          </div>
         </div>
       </DialogContent>
       <DialogActions>

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     flexGrow: 1,
     minHeight: 0,
-    width: 320,
+    width: 260,
   },
   header: {
     alignItems: "center",
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   list: {
     flexGrow: 1,
     marginTop: theme.spacing(2),
-    maxWidth: 320,
+    maxWidth: 260,
     minHeight: 0,
     overflow: "auto",
   },
