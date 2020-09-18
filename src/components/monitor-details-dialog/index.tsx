@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEvent } from "react";
 import {
   Button,
   Dialog,
@@ -16,6 +16,8 @@ import {
   closeDialog,
   selectDialogOpen,
   selectDialogType,
+  selectErrors,
+  setDiagonalError,
 } from "./monitor-details-dialog-slice";
 import MonitorIcon from "../monitor-icon";
 
@@ -56,14 +58,33 @@ export default function MonitorDetailsDialog(): JSX.Element {
   const classes = useStyles();
   const isOpen = useSelector(selectDialogOpen);
   const type = getTitleAction(useSelector(selectDialogType));
+  const errors = useSelector(selectErrors);
 
   const onClose = () => dispatch(closeDialog());
+
+  const onDiagonalChange = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const isNumberOrWhitespace = /^[1-9]\d{0,2}$/.test(e.target.value);
+
+    console.log(`[test] ${e.target.value} - ${isNumberOrWhitespace}`);
+
+    dispatch(setDiagonalError(!isNumberOrWhitespace));
+  };
+
+  const onPixelDimensionChange = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const isNumberOrWhitespace = /^[1-9]\d{0,4}$/.test(e.target.value);
+
+    dispatch(setDiagonalError(!isNumberOrWhitespace));
+  };
 
   return (
     <Dialog classes={{ paper: classes.dialog }} open={isOpen} onClose={onClose}>
       <DialogTitle>{`${type} monitor`}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        <DialogContentText component="span">
           <div className={classes.monitorIcon}>
             <MonitorIcon
               width={160}
@@ -79,6 +100,8 @@ export default function MonitorDetailsDialog(): JSX.Element {
             InputProps={{
               endAdornment: <InputAdornment position="end">in</InputAdornment>,
             }}
+            error={errors.diagonal}
+            onBlur={onDiagonalChange}
           />
           <div className={classes.pixelDimensionsContainer}>
             <TextField
@@ -90,6 +113,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
                   <InputAdornment position="end">px</InputAdornment>
                 ),
               }}
+              onBlur={onPixelDimensionChange}
             />
             <Close className={classes.x} />
             <TextField
@@ -101,12 +125,15 @@ export default function MonitorDetailsDialog(): JSX.Element {
                   <InputAdornment position="end">px</InputAdornment>
                 ),
               }}
+              onBlur={onPixelDimensionChange}
             />
           </div>
         </div>
       </DialogContent>
       <DialogActions>
-        <Button color="primary">Cancel</Button>
+        <Button color="primary" onClick={onClose}>
+          Cancel
+        </Button>
         <Button color="primary">{type}</Button>
       </DialogActions>
     </Dialog>
