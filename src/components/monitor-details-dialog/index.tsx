@@ -14,10 +14,20 @@ import { Close } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   closeDialog,
+  selectDiagonal,
+  selectDiagonalError,
   selectDialogOpen,
   selectDialogType,
-  selectErrors,
+  selectHeight,
+  selectHeightError,
+  selectWidth,
+  selectWidthError,
+  setDiagonalInches,
   setDiagonalError,
+  setHeightError,
+  setHeightPixels,
+  setWidthError,
+  setWidthPixels,
 } from "./monitor-details-dialog-slice";
 import MonitorIcon from "../monitor-icon";
 
@@ -58,26 +68,68 @@ export default function MonitorDetailsDialog(): JSX.Element {
   const classes = useStyles();
   const isOpen = useSelector(selectDialogOpen);
   const type = getTitleAction(useSelector(selectDialogType));
-  const errors = useSelector(selectErrors);
+  const errors = {
+    diagonal: useSelector(selectDiagonalError),
+    height: useSelector(selectHeightError),
+    width: useSelector(selectWidthError),
+  };
+  const monitor = {
+    diagonalInches: useSelector(selectDiagonal),
+    heightPixels: useSelector(selectHeight),
+    widthPixels: useSelector(selectWidth),
+  };
 
   const onClose = () => dispatch(closeDialog());
 
   const onDiagonalChange = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const isNumberOrWhitespace = /^[1-9]\d{0,2}$/.test(e.target.value);
+    const matches = /^[1-9]\d{0,2}$/.exec(e.target.value);
+    const isNumberOrWhitespace = matches?.length === 1;
 
-    console.log(`[test] ${e.target.value} - ${isNumberOrWhitespace}`);
+    if (errors.diagonal === isNumberOrWhitespace)
+      dispatch(setDiagonalError(!isNumberOrWhitespace));
 
-    dispatch(setDiagonalError(!isNumberOrWhitespace));
+    if (!isNumberOrWhitespace) return;
+
+    const newDiagonal = parseInt(matches[0], 10);
+
+    if (!Number.isNaN(newDiagonal) && newDiagonal !== monitor.diagonalInches)
+      dispatch(setDiagonalInches(newDiagonal));
   };
 
-  const onPixelDimensionChange = (
+  const onHeightDimensionChange = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const isNumberOrWhitespace = /^[1-9]\d{0,4}$/.test(e.target.value);
+    const matches = /^[1-9]\d{0,4}$/.exec(e.target.value);
+    const isNumberOrWhitespace = matches?.length === 1;
 
-    dispatch(setDiagonalError(!isNumberOrWhitespace));
+    if (errors.height === isNumberOrWhitespace)
+      dispatch(setHeightError(!isNumberOrWhitespace));
+
+    if (!isNumberOrWhitespace) return;
+
+    const newHeight = parseInt(matches[0], 10);
+
+    if (!Number.isNaN(newHeight) && newHeight !== monitor.heightPixels)
+      dispatch(setHeightPixels(newHeight));
+  };
+
+  const onWidthDimensionChange = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const matches = /^[1-9]\d{0,4}$/.exec(e.target.value);
+    const isNumberOrWhitespace = matches?.length === 1;
+
+    if (errors.width === isNumberOrWhitespace)
+      dispatch(setWidthError(!isNumberOrWhitespace));
+
+    if (!isNumberOrWhitespace) return;
+
+    const newWidth = parseInt(matches[0], 10);
+
+    if (!Number.isNaN(newWidth) && newWidth !== monitor.widthPixels)
+      dispatch(setWidthPixels(newWidth));
   };
 
   return (
@@ -86,10 +138,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
       <DialogContent>
         <DialogContentText component="span">
           <div className={classes.monitorIcon}>
-            <MonitorIcon
-              width={160}
-              monitor={{ widthPixels: 0, heightPixels: 0, diagonalInches: 0 }}
-            />
+            <MonitorIcon width={160} monitor={monitor} />
           </div>
         </DialogContentText>
         <div className={classes.allDimensionsContainer}>
@@ -113,7 +162,8 @@ export default function MonitorDetailsDialog(): JSX.Element {
                   <InputAdornment position="end">px</InputAdornment>
                 ),
               }}
-              onBlur={onPixelDimensionChange}
+              error={errors.width}
+              onBlur={onWidthDimensionChange}
             />
             <Close className={classes.x} />
             <TextField
@@ -125,7 +175,8 @@ export default function MonitorDetailsDialog(): JSX.Element {
                   <InputAdornment position="end">px</InputAdornment>
                 ),
               }}
-              onBlur={onPixelDimensionChange}
+              error={errors.height}
+              onBlur={onHeightDimensionChange}
             />
           </div>
         </div>

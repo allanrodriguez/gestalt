@@ -42,6 +42,8 @@ const slice = createSlice({
       action: PayloadAction<"add" | "update">
     ) {
       state.isOpen = true;
+      state.errors = initialState.errors;
+      state.monitor = initialState.monitor;
       state.type = action.payload;
     },
     setDiagonalInches(
@@ -79,7 +81,7 @@ const slice = createSlice({
       action: PayloadAction<boolean>
     ) {
       state.errors.width = action.payload;
-    }
+    },
   },
 });
 
@@ -91,10 +93,39 @@ export function selectDialogType(state: RootState): "add" | "update" {
   return state.detailsDialog.type;
 }
 
-export function selectErrors(state: RootState): InputErrors {
-  return state.detailsDialog.errors
+export function selectDiagonalError(state: RootState): boolean {
+  return state.detailsDialog.errors.diagonal;
 }
 
-export const { closeDialog, openDialog, setDiagonalError } = slice.actions;
+export function selectHeightError(state: RootState): boolean {
+  return state.detailsDialog.errors.height;
+}
+
+export function selectWidthError(state: RootState): boolean {
+  return state.detailsDialog.errors.width;
+}
+
+export function selectDiagonal(state: RootState): number {
+  return state.detailsDialog.monitor.diagonalInches;
+}
+
+export function selectHeight(state: RootState): number {
+  return state.detailsDialog.monitor.heightPixels;
+}
+
+export function selectWidth(state: RootState): number {
+  return state.detailsDialog.monitor.widthPixels;
+}
+
+export const {
+  closeDialog,
+  openDialog,
+  setDiagonalInches,
+  setDiagonalError,
+  setHeightError,
+  setHeightPixels,
+  setWidthError,
+  setWidthPixels
+} = slice.actions;
 
 export default slice.reducer;
