@@ -15,6 +15,7 @@
     "@hot-loader/react-dom": "^16.12.0",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.10.0",
     "@reduxjs/toolkit": "^1.4.0",
     "gatsby": "^2.24.65",
     "gatsby-plugin-material-ui": "^2.1.10",
@@ -32,7 +33,8 @@
     "babel-preset-gatsby": "^0.5.10",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.4.2",
-    "prettier": "2.1.2"
+    "prettier": "2.1.2",
+    "typescript": "^4.0.3"
   },
   "resolutions": {
     "lodash": "^4.17.20"
