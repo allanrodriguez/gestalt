@@ -13,6 +13,7 @@ import {
 import { Close } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  DialogType,
   closeDialog,
   selectDiagonal,
   selectDiagonalError,
@@ -30,6 +31,7 @@ import {
   setWidthPixels,
 } from "./monitor-details-dialog-slice";
 import MonitorIcon from "../monitor-icon";
+import { addMonitor2 } from "../monitors/monitors-slice";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -55,19 +57,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function getTitleAction(type: "add" | "update"): string {
-  if (type === "add") return "Add";
-
-  if (type === "update") return "Update";
-
-  return null;
-}
+const diagonalRegExp = /^[1-9]\d{0,2}$/;
+const dimensionRegExp = /^[1-9]\d{0,4}$/;
 
 export default function MonitorDetailsDialog(): JSX.Element {
   const dispatch = useDispatch();
   const classes = useStyles();
   const isOpen = useSelector(selectDialogOpen);
-  const type = getTitleAction(useSelector(selectDialogType));
+  const type = useSelector(selectDialogType);
   const errors = {
     diagonal: useSelector(selectDiagonalError),
     height: useSelector(selectHeightError),
@@ -84,57 +81,79 @@ export default function MonitorDetailsDialog(): JSX.Element {
   const onDiagonalChange = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const matches = /^[1-9]\d{0,2}$/.exec(e.target.value);
-    const isNumberOrWhitespace = matches?.length === 1;
+    const isNumberOrWhitespace =
+      e.target.value === "" || diagonalRegExp.test(e.target.value);
 
     if (errors.diagonal === isNumberOrWhitespace)
       dispatch(setDiagonalError(!isNumberOrWhitespace));
 
     if (!isNumberOrWhitespace) return;
 
-    const newDiagonal = parseInt(matches[0], 10);
+    const newDiagonal = parseInt(e.target.value, 10);
 
-    if (!Number.isNaN(newDiagonal) && newDiagonal !== monitor.diagonalInches)
+    if (!Number.isNaN(newDiagonal) && newDiagonal !== monitor.diagonalInches) {
       dispatch(setDiagonalInches(newDiagonal));
+    } else {
+      dispatch(setDiagonalInches(0));
+    }
   };
 
   const onHeightDimensionChange = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const matches = /^[1-9]\d{0,4}$/.exec(e.target.value);
-    const isNumberOrWhitespace = matches?.length === 1;
+    const isNumberOrWhitespace =
+      e.target.value === "" || dimensionRegExp.test(e.target.value);
 
     if (errors.height === isNumberOrWhitespace)
       dispatch(setHeightError(!isNumberOrWhitespace));
 
     if (!isNumberOrWhitespace) return;
 
-    const newHeight = parseInt(matches[0], 10);
+    const newHeight = parseInt(e.target.value, 10);
 
-    if (!Number.isNaN(newHeight) && newHeight !== monitor.heightPixels)
+    if (!Number.isNaN(newHeight) && newHeight !== monitor.heightPixels) {
       dispatch(setHeightPixels(newHeight));
+    } else {
+      dispatch(setHeightPixels(0));
+    }
   };
 
   const onWidthDimensionChange = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const matches = /^[1-9]\d{0,4}$/.exec(e.target.value);
-    const isNumberOrWhitespace = matches?.length === 1;
+    const isNumberOrWhitespace =
+      e.target.value === "" || dimensionRegExp.test(e.target.value);
 
     if (errors.width === isNumberOrWhitespace)
       dispatch(setWidthError(!isNumberOrWhitespace));
 
     if (!isNumberOrWhitespace) return;
 
-    const newWidth = parseInt(matches[0], 10);
+    const newWidth = parseInt(e.target.value, 10);
 
-    if (!Number.isNaN(newWidth) && newWidth !== monitor.widthPixels)
+    if (!Number.isNaN(newWidth) && newWidth !== monitor.widthPixels) {
       dispatch(setWidthPixels(newWidth));
+    } else {
+      dispatch(setWidthPixels(0));
+    }
+  };
+
+  const isSubmitButtonDisabled =
+    errors.diagonal ||
+    errors.height ||
+    errors.width ||
+    monitor.diagonalInches <= 0 ||
+    monitor.heightPixels <= 0 ||
+    monitor.widthPixels <= 0;
+
+  const onSubmit = () => {
+    dispatch(closeDialog());
+    dispatch(addMonitor2(monitor));
   };
 
   return (
     <Dialog classes={{ paper: classes.dialog }} open={isOpen} onClose={onClose}>
-      <DialogTitle>{`${type} monitor`}</DialogTitle>
+      <DialogTitle>{`${DialogType[type]} monitor`}</DialogTitle>
       <DialogContent>
         <DialogContentText component="span">
           <div className={classes.monitorIcon}>
@@ -185,7 +204,13 @@ export default function MonitorDetailsDialog(): JSX.Element {
         <Button color="primary" onClick={onClose}>
           Cancel
         </Button>
-        <Button color="primary">{type}</Button>
+        <Button
+          color="primary"
+          onClick={onSubmit}
+          disabled={isSubmitButtonDisabled}
+        >
+          {DialogType[type]}
+        </Button>
       </DialogActions>
     </Dialog>
   );

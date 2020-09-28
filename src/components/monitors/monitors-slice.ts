@@ -32,6 +32,14 @@ const monitorsSlice = createSlice({
       state.selectedId = id;
       state.isEmpty = false;
     },
+    addMonitor2(state: MonitorsState, action: PayloadAction<Monitor>) {
+      const id = nanoid();
+
+      state.ids.push(id);
+      state.byId[id] = action.payload;
+      state.selectedId = id;
+      state.isEmpty = false;
+    },
     removeMonitor(state: MonitorsState, action: PayloadAction<string>) {
       const index = state.ids.indexOf(action.payload);
 
@@ -83,6 +91,7 @@ export function selectMonitorIds(state: RootState): string[] {
 
 export const {
   addMonitor,
+  addMonitor2,
   removeMonitor,
   setMonitorDiagonal,
   setMonitorHeight,

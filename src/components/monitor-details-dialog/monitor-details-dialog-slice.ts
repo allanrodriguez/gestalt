@@ -2,6 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Monitor } from "../../common/models";
 import { RootState } from "../../state";
 
+export enum DialogType {
+  Add,
+  Update,
+}
+
 interface InputErrors {
   diagonal: boolean;
   height: boolean;
@@ -12,7 +17,7 @@ interface MonitorDetailsDialogState {
   errors: InputErrors;
   isOpen: boolean;
   monitor: Monitor;
-  type: "add" | "update";
+  type: DialogType;
 }
 
 const initialState: MonitorDetailsDialogState = {
@@ -27,7 +32,7 @@ const initialState: MonitorDetailsDialogState = {
     heightPixels: 0,
     widthPixels: 0,
   },
-  type: null,
+  type: DialogType.Add,
 };
 
 const slice = createSlice({
@@ -39,7 +44,7 @@ const slice = createSlice({
     },
     openDialog(
       state: MonitorDetailsDialogState,
-      action: PayloadAction<"add" | "update">
+      action: PayloadAction<DialogType>
     ) {
       state.isOpen = true;
       state.errors = initialState.errors;
@@ -89,7 +94,7 @@ export function selectDialogOpen(state: RootState): boolean {
   return state.detailsDialog.isOpen;
 }
 
-export function selectDialogType(state: RootState): "add" | "update" {
+export function selectDialogType(state: RootState): DialogType {
   return state.detailsDialog.type;
 }
 
@@ -125,7 +130,7 @@ export const {
   setHeightError,
   setHeightPixels,
   setWidthError,
-  setWidthPixels
+  setWidthPixels,
 } = slice.actions;
 
 export default slice.reducer;

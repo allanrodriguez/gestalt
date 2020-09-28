@@ -4,7 +4,7 @@ import { Drawer, Fab, Typography, makeStyles } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import Monitors from "../monitors";
 import MonitorDetailsDialog from "../monitor-details-dialog";
-import { openDialog } from "../monitor-details-dialog/monitor-details-dialog-slice";
+import { DialogType, openDialog } from "../monitor-details-dialog/monitor-details-dialog-slice";
 import { closeDrawer, selectDrawerOpen } from "./monitor-drawer-slice";
 
 interface MonitorDrawerProps {
@@ -52,7 +52,7 @@ export default function MonitorDrawer(props: MonitorDrawerProps): JSX.Element {
   const isDrawerOpen = useSelector(selectDrawerOpen);
 
   const onDrawerClose = () => dispatch(closeDrawer());
-  const onFabClick = () => dispatch(openDialog("add"));
+  const onFabClick = () => dispatch(openDialog(DialogType.Add));
 
   return (
     <Drawer open={isDrawerOpen} onClose={onDrawerClose}>
