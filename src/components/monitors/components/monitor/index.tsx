@@ -16,15 +16,52 @@ import {
   setMonitorWidth,
   setMonitorHeight,
 } from "../../monitors-slice";
-import styles from "./monitor.module.css";
+import { makeStyles } from "@material-ui/styles";
 
 interface MonitorProps {
   id: string;
 }
 
+const useStyles = makeStyles(theme => ({
+  formContainer: {
+    display: "grid",
+    gridGap: "4px",
+  },
+  width: {
+    gridRow: "1",
+    gridColumn: "1",
+  },
+  height: {
+    gridRow: "1",
+    gridColumn: "3",
+  },
+  x: {
+    gridRow: "1",
+    gridColumn: "2",
+    alignSelf: "end",
+  },
+  diagonal: {
+    gridRow: "2",
+    gridColumn: "1 / 4"
+  },
+  pixels: {
+    gridRow: "1",
+    gridColumn: "4",
+    alignSelf: "end",
+    paddingBottom: "5px",
+  },
+  inches: {
+    gridRow: "2",
+    gridColumn: "4",
+    paddingBottom: "5px",
+    alignSelf: "end",
+  }
+}))
+
 export default function Monitor(props: MonitorProps): JSX.Element {
   const dispatch = useDispatch();
   const monitor = useSelector(selectMonitor(props.id));
+  const classes = useStyles()
 
   const onCloseButtonClick = () => dispatch(removeMonitor(props.id));
   const onWidthChange = (
@@ -53,29 +90,29 @@ export default function Monitor(props: MonitorProps): JSX.Element {
       </ListItemIcon>
 
       <ListItemText>
-        <div className={styles.formContainer}>
+        <div className={classes.formContainer}>
           <TextField
-            className={styles.width}
+            className={classes.width}
             label="Width"
             size="small"
             onBlur={onWidthChange}
           />
-          <div className={styles.x}>
+          <div className={classes.x}>
             <Close fontSize="small" />
           </div>
           <TextField
-            className={styles.height}
+            className={classes.height}
             label="Height"
             size="small"
             onBlur={onHeightChange}
           />
-          <span className={styles.pixels}>pixels</span>
+          <span className={classes.pixels}>pixels</span>
           <TextField
-            className={styles.diagonal}
+            className={classes.diagonal}
             label="Diagonal"
             size="small"
           />
-          <span className={styles.inches}>inches</span>
+          <span className={classes.inches}>inches</span>
         </div>
       </ListItemText>
 
