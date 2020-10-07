@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
-  TextField,
+  Typography,
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import MonitorIcon from "../../../monitor-icon";
@@ -22,46 +22,17 @@ interface MonitorProps {
   id: string;
 }
 
-const useStyles = makeStyles(theme => ({
-  formContainer: {
-    display: "grid",
-    gridGap: "4px",
+const useStyles = makeStyles(() => ({
+  title: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
-  width: {
-    gridRow: "1",
-    gridColumn: "1",
-  },
-  height: {
-    gridRow: "1",
-    gridColumn: "3",
-  },
-  x: {
-    gridRow: "1",
-    gridColumn: "2",
-    alignSelf: "end",
-  },
-  diagonal: {
-    gridRow: "2",
-    gridColumn: "1 / 4"
-  },
-  pixels: {
-    gridRow: "1",
-    gridColumn: "4",
-    alignSelf: "end",
-    paddingBottom: "5px",
-  },
-  inches: {
-    gridRow: "2",
-    gridColumn: "4",
-    paddingBottom: "5px",
-    alignSelf: "end",
-  }
-}))
+}));
 
 export default function Monitor(props: MonitorProps): JSX.Element {
   const dispatch = useDispatch();
   const monitor = useSelector(selectMonitor(props.id));
-  const classes = useStyles()
+  const classes = useStyles();
 
   const onCloseButtonClick = () => dispatch(removeMonitor(props.id));
   const onWidthChange = (
@@ -89,32 +60,10 @@ export default function Monitor(props: MonitorProps): JSX.Element {
         <MonitorIcon width={40} monitor={monitor} />
       </ListItemIcon>
 
-      <ListItemText>
-        <div className={classes.formContainer}>
-          <TextField
-            className={classes.width}
-            label="Width"
-            size="small"
-            onBlur={onWidthChange}
-          />
-          <div className={classes.x}>
-            <Close fontSize="small" />
-          </div>
-          <TextField
-            className={classes.height}
-            label="Height"
-            size="small"
-            onBlur={onHeightChange}
-          />
-          <span className={classes.pixels}>pixels</span>
-          <TextField
-            className={classes.diagonal}
-            label="Diagonal"
-            size="small"
-          />
-          <span className={classes.inches}>inches</span>
-        </div>
-      </ListItemText>
+      <ListItemText
+        primary={<Typography className={classes.title}>{props.id}</Typography>}
+        secondary={`${monitor.diagonalInches}", ${monitor.widthPixels} × ${monitor.heightPixels}`}
+      />
 
       <ListItemSecondaryAction>
         <IconButton color="inherit" size="small" onClick={onCloseButtonClick}>
