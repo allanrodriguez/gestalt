@@ -20,19 +20,7 @@ const monitorsSlice = createSlice({
   name: "monitors",
   initialState,
   reducers: {
-    addMonitor(state: MonitorsState) {
-      const id = nanoid();
-
-      state.ids.push(id);
-      state.byId[id] = {
-        widthPixels: 0,
-        heightPixels: 0,
-        diagonalInches: 0,
-      };
-      state.selectedId = id;
-      state.isEmpty = false;
-    },
-    addMonitor2(state: MonitorsState, action: PayloadAction<Monitor>) {
+    addMonitor(state: MonitorsState, action: PayloadAction<Monitor>) {
       const id = nanoid();
 
       state.ids.push(id);
@@ -89,9 +77,12 @@ export function selectMonitorIds(state: RootState): string[] {
   return state.monitors.ids;
 }
 
+export function selectSelectedId(state: RootState): string {
+  return state.monitors.selectedId;
+}
+
 export const {
   addMonitor,
-  addMonitor2,
   removeMonitor,
   setMonitorDiagonal,
   setMonitorHeight,

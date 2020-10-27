@@ -31,7 +31,7 @@ import {
   setWidthPixels,
 } from "./monitor-details-dialog-slice";
 import MonitorIcon from "../monitor-icon";
-import { addMonitor2 } from "../monitors/monitors-slice";
+import { addMonitor } from "../monitors/monitors-slice";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -148,7 +148,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
 
   const onSubmit = () => {
     dispatch(closeDialog());
-    dispatch(addMonitor2(monitor));
+    dispatch(addMonitor(monitor));
   };
 
   return (
