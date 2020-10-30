@@ -1,15 +1,21 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Drawer, Fab, Typography, makeStyles } from "@material-ui/core";
+import {
+  Drawer,
+  Fab,
+  ThemeProvider,
+  Typography,
+  makeStyles,
+} from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import Monitors from "../monitors";
 import MonitorDetailsDialog from "../monitor-details-dialog";
-import { DialogType, openDialog } from "../monitor-details-dialog/monitor-details-dialog-slice";
+import {
+  DialogType,
+  openDialog,
+} from "../monitor-details-dialog/monitor-details-dialog-slice";
 import { closeDrawer, selectDrawerOpen } from "./monitor-drawer-slice";
-
-interface MonitorDrawerProps {
-  children?: React.ReactNode;
-}
+import { darkTheme } from "../../theme";
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -21,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     left: theme.spacing(2),
   },
   drawer: {
-    backgroundColor: theme.palette.secondary.main,
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
@@ -46,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MonitorDrawer(props: MonitorDrawerProps): JSX.Element {
+export default function MonitorDrawer(): JSX.Element {
   const dispatch = useDispatch();
   const classes = useStyles();
   const isDrawerOpen = useSelector(selectDrawerOpen);
@@ -55,22 +60,28 @@ export default function MonitorDrawer(props: MonitorDrawerProps): JSX.Element {
   const onFabClick = () => dispatch(openDialog(DialogType.Add));
 
   return (
-    <Drawer open={isDrawerOpen} onClose={onDrawerClose}>
-      <MonitorDetailsDialog />
-      <div className={classes.drawer} role="presentation">
-        <div className={classes.header}>
-          <Typography className={classes.headerText} variant="h6">
-            Monitors
-          </Typography>
+    <ThemeProvider theme={darkTheme}>
+      <Drawer open={isDrawerOpen} onClose={onDrawerClose}>
+        <MonitorDetailsDialog />
+        <div className={classes.drawer} role="presentation">
+          <div className={classes.header}>
+            <Typography className={classes.headerText} variant="h6">
+              Monitors
+            </Typography>
 
-          <Fab className={classes.addButton} size="small" onClick={onFabClick}>
-            <Add />
-          </Fab>
+            <Fab
+              className={classes.addButton}
+              size="small"
+              onClick={onFabClick}
+            >
+              <Add />
+            </Fab>
+          </div>
+          <div className={classes.list}>
+            <Monitors />
+          </div>
         </div>
-        <div className={classes.list}>
-          <Monitors />
-        </div>
-      </div>
-    </Drawer>
+      </Drawer>
+    </ThemeProvider>
   );
 }

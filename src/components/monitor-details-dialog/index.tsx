@@ -33,10 +33,7 @@ import {
 import MonitorIcon from "../monitor-icon";
 import { addMonitor } from "../monitors/monitors-slice";
 
-const useStyles = makeStyles((theme) => ({
-  dialog: {
-    backgroundColor: theme.palette.secondary.main,
-  },
+const useStyles = makeStyles(() => ({
   allDimensionsContainer: {
     display: "flex",
     flexDirection: "column",
@@ -152,7 +149,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
   };
 
   return (
-    <Dialog classes={{ paper: classes.dialog }} open={isOpen} onClose={onClose}>
+    <Dialog open={isOpen} onClose={onClose}>
       <DialogTitle>{`${DialogType[type]} monitor`}</DialogTitle>
       <DialogContent>
         <DialogContentText component="span">

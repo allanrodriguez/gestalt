@@ -14,32 +14,14 @@ import {
   selectSelectedId,
   removeMonitor,
 } from "../../monitors-slice";
-import { makeStyles } from "@material-ui/styles";
 
 interface MonitorProps {
   id: string;
 }
 
-const useListItemStyles = makeStyles(
-  () => ({
-    selected: {},
-    root: {
-      "&$selected": {
-        backgroundColor: "rgba(255, 255, 255, 0.08)",
-      },
-      "&$selected:hover": {
-        backgroundColor: "rgba(255, 255, 255, 0.04)",
-      },
-    },
-  }),
-  { name: "MuiListItem" }
-);
-
 export default function Monitor(props: MonitorProps): JSX.Element {
   const dispatch = useDispatch();
   const monitor = useSelector(selectMonitor(props.id));
-
-  useListItemStyles();
 
   const onCloseButtonClick = () => dispatch(removeMonitor(props.id));
 

@@ -25,4 +25,19 @@ const theme = createMuiTheme({
   },
 });
 
+const darkTheme = createMuiTheme({
+  palette: {
+    type: "dark",
+    background: {
+      default: `#000a12`,
+      paper: `#263238`,
+    },
+  },
+  typography: {
+    fontFamily: `Comfortaa`,
+  },
+});
+
 export default theme;
+
+export { darkTheme };
