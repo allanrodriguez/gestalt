@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   IconButton,
   ListItem,
@@ -10,9 +10,10 @@ import {
 import { Close } from "@material-ui/icons";
 import MonitorIcon from "../../../monitor-icon";
 import {
+  removeMonitor,
   selectMonitor,
   selectSelectedId,
-  removeMonitor,
+  setSelectedId,
 } from "../../monitors-slice";
 
 interface MonitorProps {
@@ -23,12 +24,21 @@ export default function Monitor(props: MonitorProps): JSX.Element {
   const dispatch = useDispatch();
   const monitor = useSelector(selectMonitor(props.id));
 
-  const onCloseButtonClick = () => dispatch(removeMonitor(props.id));
-
   const selectedMonitorId = useSelector(selectSelectedId);
 
+  const onCloseButtonClick = () => dispatch(removeMonitor(props.id));
+
+  const onListItemClick = () => {
+    if (props.id !== selectedMonitorId) dispatch(setSelectedId(props.id));
+  };
+
   return (
-    <ListItem button divider selected={props.id === selectedMonitorId}>
+    <ListItem
+      button
+      divider
+      onClick={onListItemClick}
+      selected={props.id === selectedMonitorId}
+    >
       <ListItemIcon>
         <MonitorIcon width={40} monitor={monitor} />
       </ListItemIcon>

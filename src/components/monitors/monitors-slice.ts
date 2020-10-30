@@ -66,6 +66,9 @@ const monitorsSlice = createSlice({
       const monitor = action.payload;
       state.byId[monitor.id].diagonalInches = monitor.diagonalInches;
     },
+    setSelectedId(state: MonitorsState, action: PayloadAction<string>) {
+      state.selectedId = action.payload;
+    },
   },
 });
 
@@ -87,6 +90,7 @@ export const {
   setMonitorDiagonal,
   setMonitorHeight,
   setMonitorWidth,
+  setSelectedId,
 } = monitorsSlice.actions;
 
 export default monitorsSlice.reducer;
