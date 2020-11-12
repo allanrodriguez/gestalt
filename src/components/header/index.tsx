@@ -1,13 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AppBar,
-  Button,
-  IconButton,
-  Toolbar,
-  makeStyles,
-} from "@material-ui/core";
-import { Menu } from "@material-ui/icons";
+import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Menu from "@material-ui/icons/Menu";
 import { selectCropButtonEnabled } from "./header-slice";
 import { openDrawer } from "../monitor-drawer/monitor-drawer-slice";
 import logo from "./gestalt-logo-web-white.svg";
