@@ -1,5 +1,3 @@
 .cache
-.yarn
 package.json
-package-lock.json
 public
