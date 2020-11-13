@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { List } from "@material-ui/core";
+import List from "@material-ui/core/List";
 import { selectMonitorIds } from "./monitors-slice";
 import Monitor from "./components/monitor";
 
