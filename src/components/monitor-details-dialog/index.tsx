@@ -1,16 +1,14 @@
-import React, { FocusEvent } from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  InputAdornment,
-  TextField,
-  makeStyles,
-} from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import React, { FocusEvent, FormEvent } from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Close from "@material-ui/icons/Close";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DialogType,
@@ -32,6 +30,18 @@ import {
 } from "./monitor-details-dialog-slice";
 import MonitorIcon from "../monitor-icon";
 import { addMonitor } from "../monitors/monitors-slice";
+
+interface Monitor {
+  diagonalInches: number;
+  heightPixels: number;
+  widthPixels: number;
+}
+
+interface Errors {
+  diagonal: boolean;
+  height: boolean;
+  width: boolean;
+}
 
 const useStyles = makeStyles(() => ({
   allDimensionsContainer: {
@@ -57,6 +67,21 @@ const useStyles = makeStyles(() => ({
 const diagonalRegExp = /^[1-9]\d{0,2}$/;
 const dimensionRegExp = /^[1-9]\d{0,4}$/;
 
+function isNumberOrWhitespace(value: string, regExp: RegExp) {
+  return value === "" || regExp.test(value);
+}
+
+function isSubmitButtonDisabled(monitor: Monitor, errors: Errors): boolean {
+  return (
+    errors.diagonal ||
+    errors.height ||
+    errors.width ||
+    monitor.diagonalInches <= 0 ||
+    monitor.heightPixels <= 0 ||
+    monitor.widthPixels <= 0
+  );
+}
+
 export default function MonitorDetailsDialog(): JSX.Element {
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -75,73 +100,62 @@ export default function MonitorDetailsDialog(): JSX.Element {
 
   const onClose = () => dispatch(closeDialog());
 
-  const onDiagonalChange = (
+  const onDiagonalInputChange = (e: FormEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+
+    if (errors.diagonal === isNumberOrWhitespace(target.value, diagonalRegExp))
+      dispatch(setDiagonalError(!errors.diagonal));
+  };
+
+  const onDiagonalInputBlur = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const isNumberOrWhitespace =
-      e.target.value === "" || diagonalRegExp.test(e.target.value);
-
-    if (errors.diagonal === isNumberOrWhitespace)
-      dispatch(setDiagonalError(!isNumberOrWhitespace));
-
-    if (!isNumberOrWhitespace) return;
+    if (!isNumberOrWhitespace(e.target.value, diagonalRegExp)) return;
 
     const newDiagonal = parseInt(e.target.value, 10);
 
-    if (!Number.isNaN(newDiagonal) && newDiagonal !== monitor.diagonalInches) {
-      dispatch(setDiagonalInches(newDiagonal));
-    } else {
-      dispatch(setDiagonalInches(0));
-    }
+    if (newDiagonal === monitor.diagonalInches) return;
+
+    dispatch(setDiagonalInches(Number.isNaN(newDiagonal) ? 0 : newDiagonal));
   };
 
-  const onHeightDimensionChange = (
+  const onHeightInputChange = (e: FormEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+
+    if (errors.height === isNumberOrWhitespace(target.value, dimensionRegExp))
+      dispatch(setHeightError(!errors.height));
+  };
+
+  const onHeightInputBlur = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const isNumberOrWhitespace =
-      e.target.value === "" || dimensionRegExp.test(e.target.value);
-
-    if (errors.height === isNumberOrWhitespace)
-      dispatch(setHeightError(!isNumberOrWhitespace));
-
-    if (!isNumberOrWhitespace) return;
+    if (!isNumberOrWhitespace(e.target.value, dimensionRegExp)) return;
 
     const newHeight = parseInt(e.target.value, 10);
 
-    if (!Number.isNaN(newHeight) && newHeight !== monitor.heightPixels) {
-      dispatch(setHeightPixels(newHeight));
-    } else {
-      dispatch(setHeightPixels(0));
-    }
+    if (newHeight === monitor.heightPixels) return;
+
+    dispatch(setHeightPixels(Number.isNaN(newHeight) ? 0 : newHeight));
   };
 
-  const onWidthDimensionChange = (
+  const onWidthInputChange = (e: FormEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+
+    if (errors.width === isNumberOrWhitespace(target.value, dimensionRegExp))
+      dispatch(setWidthError(!errors.width));
+  };
+
+  const onWidthInputBlur = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const isNumberOrWhitespace =
-      e.target.value === "" || dimensionRegExp.test(e.target.value);
-
-    if (errors.width === isNumberOrWhitespace)
-      dispatch(setWidthError(!isNumberOrWhitespace));
-
-    if (!isNumberOrWhitespace) return;
+    if (!isNumberOrWhitespace(e.target.value, dimensionRegExp)) return;
 
     const newWidth = parseInt(e.target.value, 10);
 
-    if (!Number.isNaN(newWidth) && newWidth !== monitor.widthPixels) {
-      dispatch(setWidthPixels(newWidth));
-    } else {
-      dispatch(setWidthPixels(0));
-    }
-  };
+    if (newWidth === monitor.widthPixels) return;
 
-  const isSubmitButtonDisabled =
-    errors.diagonal ||
-    errors.height ||
-    errors.width ||
-    monitor.diagonalInches <= 0 ||
-    monitor.heightPixels <= 0 ||
-    monitor.widthPixels <= 0;
+    dispatch(setWidthPixels(Number.isNaN(newWidth) ? 0 : newWidth));
+  };
 
   const onSubmit = () => {
     dispatch(closeDialog());
@@ -166,7 +180,8 @@ export default function MonitorDetailsDialog(): JSX.Element {
               endAdornment: <InputAdornment position="end">in</InputAdornment>,
             }}
             error={errors.diagonal}
-            onBlur={onDiagonalChange}
+            onBlur={onDiagonalInputBlur}
+            onInput={onDiagonalInputChange}
           />
           <div className={classes.pixelDimensionsContainer}>
             <TextField
@@ -179,7 +194,8 @@ export default function MonitorDetailsDialog(): JSX.Element {
                 ),
               }}
               error={errors.width}
-              onBlur={onWidthDimensionChange}
+              onBlur={onWidthInputBlur}
+              onInput={onWidthInputChange}
             />
             <Close className={classes.x} />
             <TextField
@@ -192,7 +208,8 @@ export default function MonitorDetailsDialog(): JSX.Element {
                 ),
               }}
               error={errors.height}
-              onBlur={onHeightDimensionChange}
+              onBlur={onHeightInputBlur}
+              onInput={onHeightInputChange}
             />
           </div>
         </div>
@@ -204,7 +221,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
         <Button
           color="primary"
           onClick={onSubmit}
-          disabled={isSubmitButtonDisabled}
+          disabled={isSubmitButtonDisabled(monitor, errors)}
         >
           {DialogType[type]}
         </Button>
