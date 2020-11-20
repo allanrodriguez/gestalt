@@ -12,7 +12,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
     <>
       <Helmet>
         <link
-          href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;700&display=swap"
           rel="stylesheet"
         />
       </Helmet>
