@@ -173,6 +173,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
         </DialogContentText>
         <div className={classes.allDimensionsContainer}>
           <TextField
+            id="diagonal"
             autoFocus
             label="Diagonal width"
             fullWidth
@@ -185,6 +186,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
           />
           <div className={classes.pixelDimensionsContainer}>
             <TextField
+              id="width"
               margin="dense"
               label="Width"
               fullWidth
@@ -199,6 +201,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
             />
             <Close className={classes.x} />
             <TextField
+              id="height"
               margin="dense"
               label="Height"
               fullWidth
