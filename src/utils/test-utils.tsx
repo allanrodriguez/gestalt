@@ -1,5 +1,5 @@
 import React from "react";
-import { createStore, Store } from "redux";
+import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { render as rtlRender } from "@testing-library/react";
 import { initialState as reducerInitialState, reducer } from "../state";

@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { ThemeProvider, CssBaseline } from "@material-ui/core";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "../../src/theme";
 
 interface MuiLayoutProps {
