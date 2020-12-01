@@ -1,5 +1,6 @@
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import AddPhotoAlternateRounded from "@material-ui/icons/AddPhotoAlternateRounded";
 import React from "react";
 import { DropzoneRootProps, useDropzone } from "react-dropzone";
 
@@ -7,7 +8,7 @@ const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
   return {
     container: {
       height: "100%",
-      padding: theme.spacing(2),
+      padding: theme.spacing(3),
     },
     dropzone: {
       height: "100%",
@@ -15,11 +16,11 @@ const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
       flex: 1,
       flexDirection: "column",
       alignItems: "center",
+      justifyContent: "center",
       padding: theme.spacing(2),
       borderWidth: 2,
       borderRadius: 2,
       borderColor: (props) => {
-        console.log(JSON.stringify(props, null, 2));
         if (props.isDragAccept) {
           return theme.palette.success.main;
         }
@@ -28,11 +29,19 @@ const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
           return theme.palette.error.main;
         }
 
+        if (props.isFocused) {
+          return theme.palette.text.primary;
+        }
+
         return theme.palette.primary.dark;
       },
       borderStyle: "dashed",
       outline: "none",
       transition: "border .25s ease-in-out",
+      cursor: "pointer",
+    },
+    uploadIcon: {
+      fontSize: "5rem",
     },
   };
 });
@@ -43,14 +52,16 @@ export default function Upload() {
     getInputProps,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: "image/*" });
-  const classes = useStyles({ isDragAccept, isDragReject });
+    isFocused,
+  } = useDropzone({ accept: "image/*", maxFiles: 1 });
+  const classes = useStyles({ isDragAccept, isDragReject, isFocused });
 
   return (
     <div className={classes.container}>
       <div {...getRootProps({ className: classes.dropzone })}>
         <input {...getInputProps()} />
-        Drag and drop an image here, or click to select an image...
+        <h2>Drag and drop an image here, or click to select an image</h2>
+        <AddPhotoAlternateRounded className={classes.uploadIcon} />
       </div>
     </div>
   );
