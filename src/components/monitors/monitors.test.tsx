@@ -4,6 +4,16 @@ import { render } from "../../utils/test-utils";
 import Monitors from ".";
 
 describe("Monitors", () => {
+  it("shows instructions when there are no monitors", () => {
+    const { queryByText } = render(<Monitors />);
+
+    const message = queryByText(
+      /button above to add your monitors to this list\./
+    );
+
+    expect(message).toBeInTheDocument();
+  });
+
   it("creates a monitor for every monitor id in the state", () => {
     const ids = ["1", "2", "3", "4"];
     const state = {
