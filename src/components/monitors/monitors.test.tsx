@@ -5,9 +5,9 @@ import Monitors from ".";
 
 describe("Monitors", () => {
   it("shows instructions when there are no monitors", () => {
-    const { getByText } = render(<Monitors />);
+    const { queryByText } = render(<Monitors />);
 
-    const message = getByText(
+    const message = queryByText(
       /button above to add your monitors to this list\./
     );
 
