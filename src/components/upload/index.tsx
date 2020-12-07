@@ -3,20 +3,26 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import AddPhotoAlternateRounded from "@material-ui/icons/AddPhotoAlternateRounded";
 import React from "react";
 import { DropzoneRootProps, useDropzone } from "react-dropzone";
+import { setUploadedImage } from "../../store";
 
 const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
   return {
     container: {
       height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
       padding: theme.spacing(3),
     },
     dropzone: {
-      height: "100%",
       display: "flex",
-      flex: 1,
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
+      textAlign: "center",
+      backgroundColor: theme.palette.primary.light,
+      marginBottom: 64,
       padding: theme.spacing(2),
       borderWidth: 2,
       borderRadius: 2,
@@ -41,7 +47,7 @@ const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
       cursor: "pointer",
     },
     uploadIcon: {
-      fontSize: "5rem",
+      marginBottom: "1rem",
     },
   };
 });
@@ -53,7 +59,11 @@ export default function Upload() {
     isDragAccept,
     isDragReject,
     isFocused,
-  } = useDropzone({ accept: "image/*", maxFiles: 1 });
+  } = useDropzone({
+    accept: "image/*",
+    maxFiles: 1,
+    onDropAccepted: async (files) => await setUploadedImage(files[0]),
+  });
   const classes = useStyles({ isDragAccept, isDragReject, isFocused });
 
   return (
@@ -61,7 +71,10 @@ export default function Upload() {
       <div {...getRootProps({ className: classes.dropzone })}>
         <input {...getInputProps()} />
         <h2>Drag and drop an image here, or click to select an image</h2>
-        <AddPhotoAlternateRounded className={classes.uploadIcon} />
+        <AddPhotoAlternateRounded
+          className={classes.uploadIcon}
+          fontSize="large"
+        />
       </div>
     </div>
   );
