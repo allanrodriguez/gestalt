@@ -1,5 +1,6 @@
 import React from "react";
-import { makeStyles, Theme } from "@material-ui/core";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Monitor } from "../../common/models";
 
 interface MonitorIconProps {
@@ -22,7 +23,7 @@ const useStyles = makeStyles<Theme, MonitorIconProps>((theme) => ({
     fill: "#485559",
   },
   screen: {
-    fill: "#007fff",
+    fill: theme.palette.secondary.main,
   },
 }));
 

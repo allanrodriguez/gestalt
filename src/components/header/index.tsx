@@ -8,7 +8,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Menu from "@material-ui/icons/Menu";
 import { selectCropButtonEnabled } from "./header-slice";
 import { openDrawer } from "../monitor-drawer/monitor-drawer-slice";
-import logo from "./gestalt-logo-web-white.svg";
+import logo from "./gestalt-logo-web-black.svg";
 
 interface HeaderProps {
   cropButton?: boolean;

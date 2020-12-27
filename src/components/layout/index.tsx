@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import Divider from "@material-ui/core/Divider";
 import Header from "../header";
 
 interface LayoutProps {
@@ -17,6 +18,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
         />
       </Helmet>
       <Header drawer={props.drawer && true} />
+      <Divider />
       {props.drawer}
       <main>{props.children}</main>
     </>
