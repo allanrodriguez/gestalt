@@ -1,9 +1,11 @@
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import AddPhotoAlternateRounded from "@material-ui/icons/AddPhotoAlternateRounded";
 import React from "react";
 import { DropzoneRootProps, useDropzone } from "react-dropzone";
+import { useDispatch } from "react-redux";
+import AddPhotoAlternateRounded from "@material-ui/icons/AddPhotoAlternateRounded";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import { setUploadedImage } from "../../store";
+import { setImageUploaded } from "../image-editor/image-slice";
 
 const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
   return {
@@ -53,6 +55,7 @@ const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
 });
 
 export default function Upload() {
+  const dispatch = useDispatch();
   const {
     getRootProps,
     getInputProps,
@@ -62,7 +65,9 @@ export default function Upload() {
   } = useDropzone({
     accept: "image/*",
     maxFiles: 1,
-    onDropAccepted: async (files) => await setUploadedImage(files[0]),
+    onDropAccepted: async (files) => {
+      if (await setUploadedImage(files[0])) dispatch(setImageUploaded(true));
+    },
   });
   const classes = useStyles({ isDragAccept, isDragReject, isFocused });
 
