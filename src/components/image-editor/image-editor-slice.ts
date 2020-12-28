@@ -4,11 +4,13 @@ import { RootState } from "../../state";
 interface ImageEditorState {
   isUploaded: boolean;
   url: string;
+  zoomLevel: number;
 }
 
 const initialState: ImageEditorState = {
   isUploaded: false,
   url: null,
+  zoomLevel: 1,
 };
 
 const slice = createSlice({
@@ -17,9 +19,13 @@ const slice = createSlice({
   reducers: {
     setImageUploaded(state: ImageEditorState, action: PayloadAction<boolean>) {
       state.isUploaded = action.payload;
+      state.zoomLevel = 1;
     },
     setImageUrl(state: ImageEditorState, action: PayloadAction<string>) {
       state.url = action.payload;
+    },
+    setZoomLevel(state: ImageEditorState, action: PayloadAction<number>) {
+      state.zoomLevel = action.payload;
     },
   },
 });
@@ -32,6 +38,10 @@ export function selectImageUrl(state: RootState) {
   return state.imageEditor.url;
 }
 
-export const { setImageUploaded, setImageUrl } = slice.actions;
+export function selectZoomLevel(state: RootState) {
+  return state.imageEditor.zoomLevel;
+}
+
+export const { setImageUploaded, setImageUrl, setZoomLevel } = slice.actions;
 
 export default slice.reducer;

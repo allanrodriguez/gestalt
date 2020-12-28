@@ -1,11 +1,15 @@
-import { Slider } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectImageUrl, setImageUrl } from "./image-editor-slice";
+import {
+  selectImageUrl,
+  selectZoomLevel,
+  setImageUrl,
+} from "./image-editor-slice";
 import { getUploadedImage } from "../../store";
 
 export default function ImageEditor() {
   const imageUrl = useSelector(selectImageUrl);
+  const zoomLevel = useSelector(selectZoomLevel);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -19,11 +23,9 @@ export default function ImageEditor() {
     return () => {
       if (!imageLoaded) return;
       URL.revokeObjectURL(imageUrl);
-      setImageUrl(null);
+      dispatch(setImageUrl(null));
     };
   }, []);
-
-  const [scale, setScale] = useState(1);
 
   return (
     <div
@@ -33,26 +35,12 @@ export default function ImageEditor() {
         alignItems: "center",
       }}
     >
-      <div
-        style={{
-          backgroundColor: "white",
-          width: "15rem",
-          flexShrink: 0,
-          zIndex: 1,
-        }}
-      >
-        <Slider
-          onChange={(e, v) => setScale(Array.isArray(v) ? v[0] : v)}
-          min={0.33}
-          max={4}
-        ></Slider>
-      </div>
       <div>
         <img
           style={{
             border: "1px solid black",
             display: "block",
-            transform: `scale(${scale})`,
+            transform: `scale(${zoomLevel})`,
           }}
           src={imageUrl}
         />

@@ -17,7 +17,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: `Comfortaa`,
+    fontFamily: `Comfortaa, sans-serif`,
   },
 });
 
