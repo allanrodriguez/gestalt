@@ -1,8 +1,8 @@
 import { Slider } from "@material-ui/core";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { selectImageUrl, setImageUrl } from "./image-editor-slice";
 import { getUploadedImage } from "../../store";
-import { selectImageUrl, setImageUrl } from "./image-slice";
 
 export default function ImageEditor() {
   const imageUrl = useSelector(selectImageUrl);

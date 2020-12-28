@@ -1,11 +1,11 @@
 import React from "react";
 import { DropzoneRootProps, useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import AddPhotoAlternateRounded from "@material-ui/icons/AddPhotoAlternateRounded";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import AddPhotoAlternateRounded from "@material-ui/icons/AddPhotoAlternateRounded";
 import { setUploadedImage } from "../../store";
-import { setImageUploaded } from "../image-editor/image-slice";
+import { setImageUploaded } from "../image-editor/image-editor-slice";
 
 const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
   return {
