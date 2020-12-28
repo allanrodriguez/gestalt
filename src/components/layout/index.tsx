@@ -6,6 +6,7 @@ import Header from "../header";
 interface LayoutProps {
   children?: React.ReactNode;
   drawer?: React.ReactNode;
+  menu?: React.ReactNode;
 }
 
 export default function Layout(props: LayoutProps): JSX.Element {
@@ -17,7 +18,7 @@ export default function Layout(props: LayoutProps): JSX.Element {
           rel="stylesheet"
         />
       </Helmet>
-      <Header drawer={props.drawer && true} />
+      <Header drawer={props.drawer && true} menu={props.menu} />
       <Divider />
       {props.drawer}
       <main>{props.children}</main>

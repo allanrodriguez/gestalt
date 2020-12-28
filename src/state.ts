@@ -7,14 +7,14 @@ import {
 import detailsDialogReducer from "./components/monitor-details-dialog/monitor-details-dialog-slice";
 import drawerReducer from "./components/monitor-drawer/monitor-drawer-slice";
 import headerReducer from "./components/header/header-slice";
-import imageReducer from "./components/image-editor/image-slice"
+import imageEditorReducer from "./components/image-editor/image-editor-slice";
 import monitorsReducer from "./components/monitors/monitors-slice";
 
 export const reducer = combineReducers({
   detailsDialog: detailsDialogReducer,
   drawer: drawerReducer,
   header: headerReducer,
-  image: imageReducer,
+  imageEditor: imageEditorReducer,
   monitors: monitorsReducer,
 });
 

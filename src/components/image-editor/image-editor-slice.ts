@@ -1,35 +1,35 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../state";
 
-interface ImageState {
+interface ImageEditorState {
   isUploaded: boolean;
   url: string;
 }
 
-const initialState: ImageState = {
+const initialState: ImageEditorState = {
   isUploaded: false,
   url: null,
 };
 
 const slice = createSlice({
-  name: "image",
+  name: "image-editor",
   initialState,
   reducers: {
-    setImageUploaded(state: ImageState, action: PayloadAction<boolean>) {
+    setImageUploaded(state: ImageEditorState, action: PayloadAction<boolean>) {
       state.isUploaded = action.payload;
     },
-    setImageUrl(state: ImageState, action: PayloadAction<string>) {
+    setImageUrl(state: ImageEditorState, action: PayloadAction<string>) {
       state.url = action.payload;
     },
   },
 });
 
 export function selectImageUploaded(state: RootState) {
-  return state.image.isUploaded;
+  return state.imageEditor.isUploaded;
 }
 
 export function selectImageUrl(state: RootState) {
-  return state.image.url;
+  return state.imageEditor.url;
 }
 
 export const { setImageUploaded, setImageUrl } = slice.actions;
