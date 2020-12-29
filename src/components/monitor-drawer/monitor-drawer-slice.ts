@@ -13,11 +13,8 @@ const monitorDrawerSlice = createSlice({
   name: "monitor-drawer",
   initialState,
   reducers: {
-    closeDrawer: (state) => {
-      state.isOpen = false;
-    },
-    openDrawer: (state) => {
-      state.isOpen = true;
+    toggleDrawer: (state) => {
+      state.isOpen = !state.isOpen;
     },
   },
 });
@@ -26,6 +23,6 @@ export function selectDrawerOpen(state: RootState): boolean {
   return state.drawer.isOpen;
 }
 
-export const { closeDrawer, openDrawer } = monitorDrawerSlice.actions;
+export const { toggleDrawer } = monitorDrawerSlice.actions;
 
 export default monitorDrawerSlice.reducer;

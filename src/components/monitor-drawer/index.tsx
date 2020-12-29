@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   Drawer,
   Fab,
+  Theme,
   ThemeProvider,
   Typography,
   makeStyles,
@@ -14,10 +15,14 @@ import {
   DialogType,
   openDialog,
 } from "../monitor-details-dialog/monitor-details-dialog-slice";
-import { closeDrawer, selectDrawerOpen } from "./monitor-drawer-slice";
+import { selectDrawerOpen } from "./monitor-drawer-slice";
 import { darkTheme } from "../../theme";
 
-const useStyles = makeStyles((theme) => ({
+export interface MonitorDrawerProps {
+  width: number;
+}
+
+const useStyles = makeStyles<Theme, MonitorDrawerProps>((theme) => ({
   addButton: {
     minHeight: 32,
     position: "absolute",
@@ -31,7 +36,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     flexGrow: 1,
     minHeight: 0,
-    width: 260,
+    width: (props) => props.width,
+  },
+  drawerPaper: {
+    top: "unset",
   },
   header: {
     alignItems: "center",
@@ -51,17 +59,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MonitorDrawer(): JSX.Element {
+export default function MonitorDrawer(props: MonitorDrawerProps): JSX.Element {
   const dispatch = useDispatch();
-  const classes = useStyles();
+  const classes = useStyles(props);
   const isDrawerOpen = useSelector(selectDrawerOpen);
 
-  const onDrawerClose = () => dispatch(closeDrawer());
   const onFabClick = () => dispatch(openDialog(DialogType.Add));
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Drawer open={isDrawerOpen} onClose={onDrawerClose}>
+      <Drawer
+        variant="persistent"
+        open={isDrawerOpen}
+        classes={{ paper: classes.drawerPaper }}
+      >
         <MonitorDetailsDialog />
         <div className={classes.drawer} role="presentation">
           <div className={classes.header}>

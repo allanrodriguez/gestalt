@@ -1,23 +1,39 @@
+import clsx from "clsx";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import Toolbar from "@material-ui/core/Toolbar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Menu from "@material-ui/icons/Menu";
-import { selectCropButtonEnabled } from "./header-slice";
-import { openDrawer } from "../monitor-drawer/monitor-drawer-slice";
 import logo from "./gestalt-logo-web-white.svg";
 
 interface HeaderProps {
   cropButton?: boolean;
-  drawer?: boolean;
+  drawerOpen?: boolean;
+  drawerWidth?: number;
+  onMenuButtonClick?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles<Theme, HeaderProps>((theme) => ({
+  appBar: {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: (props) => `calc(100% - ${props.drawerWidth}px)`,
+    marginLeft: (props) => props.drawerWidth,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
   drawerButton: {
-    color: "inherit",
+    color: theme.palette.text.primary,
     marginRight: theme.spacing(2),
   },
   logo: {
@@ -27,21 +43,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header(props: HeaderProps): JSX.Element {
-  const isCropButtonEnabled = useSelector(selectCropButtonEnabled);
-  const classes = useStyles();
-  const dispatch = useDispatch();
-
-  const onMenuButtonClick = () => dispatch(openDrawer());
+  const classes = useStyles(props);
 
   return (
-    <AppBar elevation={0} position="static">
+    <AppBar
+      className={clsx(classes.appBar, {
+        [classes.appBarShift]: props.drawerOpen,
+      })}
+      elevation={0}
+      position="fixed"
+    >
       <Toolbar>
-        {props.drawer && (
+        {props.drawerWidth && (
           <IconButton
             className={classes.drawerButton}
             edge="start"
-            aria-label="menu"
-            onClick={onMenuButtonClick}
+            aria-label="Open drawer"
+            onClick={props.onMenuButtonClick}
           >
             <Menu />
           </IconButton>
@@ -49,16 +67,6 @@ export default function Header(props: HeaderProps): JSX.Element {
         <div className={classes.logo}>
           <img src={logo} alt="Gatsby logo" height={38} />
         </div>
-        {props.cropButton && (
-          <Button
-            color="secondary"
-            disableElevation={true}
-            variant="contained"
-            disabled={!isCropButtonEnabled}
-          >
-            Crop
-          </Button>
-        )}
       </Toolbar>
     </AppBar>
   );
