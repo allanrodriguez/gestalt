@@ -1,20 +1,17 @@
 import clsx from "clsx";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import Toolbar from "@material-ui/core/Toolbar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/icons/Menu";
 import logo from "./gestalt-logo-web-white.svg";
+import { selectDrawerOpen, toggleDrawer } from "../../layout-slice";
 
 interface HeaderProps {
-  cropButton?: boolean;
-  drawerOpen?: boolean;
   drawerWidth?: number;
-  onMenuButtonClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void;
 }
 
 const useStyles = makeStyles<Theme, HeaderProps>((theme) => ({
@@ -43,12 +40,16 @@ const useStyles = makeStyles<Theme, HeaderProps>((theme) => ({
 }));
 
 export default function Header(props: HeaderProps): JSX.Element {
+  const isDrawerOpen = useSelector(selectDrawerOpen);
+  const dispatch = useDispatch();
   const classes = useStyles(props);
+
+  const onMenuButtonClick = () => dispatch(toggleDrawer());
 
   return (
     <AppBar
       className={clsx(classes.appBar, {
-        [classes.appBarShift]: props.drawerOpen,
+        [classes.appBarShift]: isDrawerOpen,
       })}
       elevation={0}
       position="fixed"
@@ -59,7 +60,7 @@ export default function Header(props: HeaderProps): JSX.Element {
             className={classes.drawerButton}
             edge="start"
             aria-label="Open drawer"
-            onClick={props.onMenuButtonClick}
+            onClick={onMenuButtonClick}
           >
             <Menu />
           </IconButton>
