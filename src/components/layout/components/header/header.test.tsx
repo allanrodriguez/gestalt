@@ -4,25 +4,25 @@ import { render } from "../../../../utils/test-utils";
 
 describe("Header", () => {
   it("renders the logo", () => {
-    const { queryByAltText } = render(<Header />);
+    const { queryByAltText } = render(<Header drawerWidth={0} />);
 
     const image = queryByAltText("Gatsby logo");
 
     expect(image).toBeInTheDocument();
   });
 
-  it("renders the menu button when 'drawerWidth' is not 0", () => {
-    const { queryByLabelText } = render(<Header drawerWidth={1} />);
+  it("renders the menu button when 'drawer' is true", () => {
+    const { queryByLabelText } = render(<Header drawer drawerWidth={0} />);
 
-    const menuButton = queryByLabelText("menu");
+    const menuButton = queryByLabelText("Open drawer");
 
     expect(menuButton).toBeInTheDocument();
   });
 
-  it("does not render the menu button when 'drawerWidth' is unspecified", () => {
-    const { queryByLabelText } = render(<Header />);
+  it("does not render the menu button when 'drawer' is unspecified", () => {
+    const { queryByLabelText } = render(<Header drawerWidth={0} />);
 
-    const menuButton = queryByLabelText("menu");
+    const menuButton = queryByLabelText("Open drawer");
 
     expect(menuButton).not.toBeInTheDocument();
   });

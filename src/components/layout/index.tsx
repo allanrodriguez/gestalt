@@ -51,8 +51,8 @@ export default function Layout(props: LayoutProps): JSX.Element {
         />
       </Helmet>
       <div className={classes.root}>
-        <Header drawerWidth={drawerWidth} />
-        <Drawer width={drawerWidth}>{props.drawer}</Drawer>
+        <Header drawer={props.drawer && true} drawerWidth={drawerWidth} />
+        {props.drawer && <Drawer width={drawerWidth}>{props.drawer}</Drawer>}
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: isDrawerOpen,

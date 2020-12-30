@@ -11,7 +11,8 @@ import logo from "./gestalt-logo-web-white.svg";
 import { selectDrawerOpen, toggleDrawer } from "../../layout-slice";
 
 interface HeaderProps {
-  drawerWidth?: number;
+  drawer?: boolean;
+  drawerWidth: number;
 }
 
 const useStyles = makeStyles<Theme, HeaderProps>((theme) => ({
@@ -55,7 +56,7 @@ export default function Header(props: HeaderProps): JSX.Element {
       position="fixed"
     >
       <Toolbar>
-        {props.drawerWidth && (
+        {props.drawer && (
           <IconButton
             className={classes.drawerButton}
             edge="start"
