@@ -1,6 +1,6 @@
 import React from "react";
-import { render } from "../../utils/test-utils";
 import Header from ".";
+import { render } from "../../../../utils/test-utils";
 
 describe("Header", () => {
   it("renders the logo", () => {
@@ -11,35 +11,19 @@ describe("Header", () => {
     expect(image).toBeInTheDocument();
   });
 
-  it("renders the menu button when 'drawer' is set to true", () => {
-    const { queryByLabelText } = render(<Header drawer />);
+  it("renders the menu button when 'drawerWidth' is not 0", () => {
+    const { queryByLabelText } = render(<Header drawerWidth={1} />);
 
     const menuButton = queryByLabelText("menu");
 
     expect(menuButton).toBeInTheDocument();
   });
 
-  it("does not render the menu button when 'drawer' is set to false", () => {
+  it("does not render the menu button when 'drawerWidth' is unspecified", () => {
     const { queryByLabelText } = render(<Header />);
 
     const menuButton = queryByLabelText("menu");
 
     expect(menuButton).not.toBeInTheDocument();
-  });
-
-  it("renders the crop button when 'cropButton' is set to true", () => {
-    const { queryByText } = render(<Header cropButton />);
-
-    const cropButton = queryByText("Crop");
-
-    expect(cropButton).toBeInTheDocument();
-  });
-
-  it("does not render the crop button when 'cropButton' is set to false", () => {
-    const { queryByText } = render(<Header />);
-
-    const cropButton = queryByText("Crop");
-
-    expect(cropButton).not.toBeInTheDocument();
   });
 });

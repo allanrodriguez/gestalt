@@ -1,21 +1,38 @@
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import clsx from "clsx";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
-import { makeStyles } from "@material-ui/core";
-import Header from "../header";
-import MonitorDrawer from "../monitor-drawer";
-import {
-  selectDrawerOpen,
-  toggleDrawer,
-} from "../monitor-drawer/monitor-drawer-slice";
+import { useSelector } from "react-redux";
+import Drawer from "./components/drawer";
+import Header from "./components/header";
+import { selectDrawerOpen } from "./layout-slice";
 
 interface LayoutProps {
   children?: React.ReactNode;
+  drawer?: React.ReactNode;
 }
 
 const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
+  content: {
+    flexGrow: 1,
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  headerBuffer: {
+    ...theme.mixins.toolbar,
+  },
   root: {
     display: "flex",
   },
@@ -23,10 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Layout(props: LayoutProps): JSX.Element {
   const isDrawerOpen = useSelector(selectDrawerOpen);
-  const dispatch = useDispatch();
   const classes = useStyles();
-
-  const onMenuButtonClick = () => dispatch(toggleDrawer());
 
   return (
     <>
@@ -37,13 +51,16 @@ export default function Layout(props: LayoutProps): JSX.Element {
         />
       </Helmet>
       <div className={classes.root}>
-        <Header
-          drawerOpen={isDrawerOpen}
-          drawerWidth={drawerWidth}
-          onMenuButtonClick={onMenuButtonClick}
-        />
-        <MonitorDrawer width={drawerWidth} />
-        <main>{props.children}</main>
+        <Header drawerWidth={drawerWidth} />
+        <Drawer width={drawerWidth}>{props.drawer}</Drawer>
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: isDrawerOpen,
+          })}
+        >
+          <div className={classes.headerBuffer} />
+          {props.children}
+        </main>
       </div>
     </>
   );

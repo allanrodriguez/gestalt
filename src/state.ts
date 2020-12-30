@@ -6,12 +6,10 @@ import {
 } from "@reduxjs/toolkit";
 import layoutReducer from "./components/layout/layout-slice";
 import detailsDialogReducer from "./components/monitor-details-dialog/monitor-details-dialog-slice";
-import drawerReducer from "./components/monitor-drawer/monitor-drawer-slice";
 import monitorsReducer from "./components/monitors/monitors-slice";
 
 export const reducer = combineReducers({
   detailsDialog: detailsDialogReducer,
-  drawer: drawerReducer,
   layout: layoutReducer,
   monitors: monitorsReducer,
 });
