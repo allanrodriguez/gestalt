@@ -1,3 +1,4 @@
+import { DrawerClassKey } from "@material-ui/core/Drawer/Drawer";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import clsx from "clsx";
 import React from "react";
@@ -9,7 +10,12 @@ import { selectDrawerOpen } from "./layout-slice";
 
 interface LayoutProps {
   children?: React.ReactNode;
+  classes?: LayoutClassesProps;
   drawer?: React.ReactNode;
+}
+
+interface LayoutClassesProps {
+  drawer?: Partial<Record<DrawerClassKey, string>>;
 }
 
 const drawerWidth = 260;
@@ -52,7 +58,11 @@ export default function Layout(props: LayoutProps): JSX.Element {
       </Helmet>
       <div className={classes.root}>
         <Header drawer={props.drawer && true} drawerWidth={drawerWidth} />
-        {props.drawer && <Drawer width={drawerWidth}>{props.drawer}</Drawer>}
+        {props.drawer && (
+          <Drawer width={drawerWidth} classes={props.classes?.drawer}>
+            {props.drawer}
+          </Drawer>
+        )}
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: isDrawerOpen,
