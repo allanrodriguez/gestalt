@@ -11,6 +11,7 @@ import { selectDrawerOpen } from "./layout-slice";
 interface LayoutProps {
   children?: React.ReactNode;
   classes?: LayoutClassesProps;
+  header?: React.ReactNode;
   drawer?: React.ReactNode;
 }
 
@@ -57,7 +58,9 @@ export default function Layout(props: LayoutProps): JSX.Element {
         />
       </Helmet>
       <div className={classes.root}>
-        <Header drawer={props.drawer && true} drawerWidth={drawerWidth} />
+        <Header drawer={props.drawer && true} drawerWidth={drawerWidth}>
+          {props.header}
+        </Header>
         {props.drawer && (
           <Drawer width={drawerWidth} classes={props.classes?.drawer}>
             {props.drawer}

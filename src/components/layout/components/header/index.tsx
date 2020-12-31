@@ -11,6 +11,7 @@ import logo from "./gestalt-logo-web-white.svg";
 import { selectDrawerOpen, toggleDrawer } from "../../layout-slice";
 
 interface HeaderProps {
+  children?: React.ReactNode;
   drawer?: boolean;
   drawerWidth: number;
 }
@@ -69,6 +70,7 @@ export default function Header(props: HeaderProps): JSX.Element {
         <div className={classes.logo}>
           <img src={logo} alt="Gatsby logo" height={38} />
         </div>
+        {props.children}
       </Toolbar>
     </AppBar>
   );
