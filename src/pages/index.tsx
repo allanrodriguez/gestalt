@@ -17,7 +17,6 @@ import {
 import Layout from "../components/layout";
 import MonitorDrawer from "../components/monitor-drawer";
 import Upload from "../components/upload";
-import "../global.css";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

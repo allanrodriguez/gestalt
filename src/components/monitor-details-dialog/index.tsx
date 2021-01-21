@@ -49,6 +49,9 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     width: "15rem",
   },
+  dialog: {
+    backgroundColor: "#263238",
+  },
   monitorIcon: {
     display: "flex",
     justifyContent: "center",
@@ -163,7 +166,7 @@ export default function MonitorDetailsDialog(): JSX.Element {
   };
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
+    <Dialog classes={{ paper: classes.dialog }} open={isOpen} onClose={onClose}>
       <DialogTitle>{`${DialogType[type]} monitor`}</DialogTitle>
       <DialogContent dividers>
         <DialogContentText component="span">

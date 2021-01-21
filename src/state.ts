@@ -4,17 +4,15 @@ import {
   combineReducers,
   configureStore,
 } from "@reduxjs/toolkit";
+import layoutReducer from "./components/layout/layout-slice";
 import detailsDialogReducer from "./components/monitor-details-dialog/monitor-details-dialog-slice";
-import drawerReducer from "./components/monitor-drawer/monitor-drawer-slice";
-import headerReducer from "./components/header/header-slice";
 import imageEditorReducer from "./components/image-editor/image-editor-slice";
 import monitorsReducer from "./components/monitors/monitors-slice";
 
 export const reducer = combineReducers({
   detailsDialog: detailsDialogReducer,
-  drawer: drawerReducer,
-  header: headerReducer,
   imageEditor: imageEditorReducer,
+  layout: layoutReducer,
   monitors: monitorsReducer,
 });
 

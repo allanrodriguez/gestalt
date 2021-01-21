@@ -1,18 +1,16 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
 import Fab from "@material-ui/core/Fab";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Add } from "@material-ui/icons";
+import React from "react";
+import { useDispatch } from "react-redux";
 import Monitors from "../monitors";
 import MonitorDetailsDialog from "../monitor-details-dialog";
 import {
   DialogType,
   openDialog,
 } from "../monitor-details-dialog/monitor-details-dialog-slice";
-import { closeDrawer, selectDrawerOpen } from "./monitor-drawer-slice";
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -29,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     flexGrow: 1,
     minHeight: 0,
-    width: 260,
   },
   header: {
     alignItems: "center",
@@ -52,13 +49,11 @@ const useStyles = makeStyles((theme) => ({
 export default function MonitorDrawer(): JSX.Element {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const isDrawerOpen = useSelector(selectDrawerOpen);
 
-  const onDrawerClose = () => dispatch(closeDrawer());
   const onFabClick = () => dispatch(openDialog(DialogType.Add));
 
   return (
-    <Drawer open={isDrawerOpen} onClose={onDrawerClose}>
+    <>
       <MonitorDetailsDialog />
       <div className={classes.drawer} role="presentation">
         <div className={classes.header}>
@@ -80,6 +75,6 @@ export default function MonitorDrawer(): JSX.Element {
           <Monitors />
         </div>
       </div>
-    </Drawer>
+    </>
   );
 }

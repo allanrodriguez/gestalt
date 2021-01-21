@@ -1,25 +1,6 @@
-html,
+/* html,
 body,
 #___gatsby,
 #gatsby-focus-wrapper {
   height: 100%;
-  margin: 0;
-}
-
-#gatsby-focus-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-#gatsby-focus-wrapper header {
-  flex-grow: 0;
-  flex-shrink: 1;
-  flex-basis: auto;
-}
-
-#gatsby-focus-wrapper main {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
-  overflow: auto;
-}
+} */
