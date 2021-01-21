@@ -11,7 +11,7 @@ describe("Layout", () => {
       </HelmetProvider>
     );
 
-    const menuButton = queryByRole("button", { name: "menu" });
+    const menuButton = queryByRole("button", { name: /^Open drawer$/ });
 
     expect(menuButton).toBeInTheDocument();
   });
@@ -23,7 +23,7 @@ describe("Layout", () => {
       </HelmetProvider>
     );
 
-    const menuButton = queryByRole("button", { name: "menu" });
+    const menuButton = queryByRole("button", { name: /^Open drawer$/ });
 
     expect(menuButton).not.toBeInTheDocument();
   });
