@@ -19,6 +19,9 @@ import MonitorDrawer from "../components/monitor-drawer";
 import Upload from "../components/upload";
 
 const useStyles = makeStyles((theme) => ({
+  drawerPaper: {
+    background: "rgba(0, 0, 0, 0.18)",
+  },
   formControl: {
     paddingLeft: 24,
     paddingRight: 24,
@@ -38,9 +41,18 @@ const zoomLevels = [25, 50, 75, 100, 125, 150, 200, 300, 400];
 
 export default function Home(): JSX.Element {
   const isImageUploaded = useSelector(selectImageUploaded);
+  const classes = useStyles();
 
   return (
-    <Layout drawer={<MonitorDrawer />} menu={isImageUploaded && <HomeMenu />}>
+    <Layout
+      classes={{
+        drawer: {
+          paper: classes.drawerPaper,
+        },
+      }}
+      drawer={<MonitorDrawer />}
+      menu={isImageUploaded && <HomeMenu />}
+    >
       {isImageUploaded ? <ImageEditor /> : <Upload />}
     </Layout>
   );

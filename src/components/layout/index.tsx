@@ -1,5 +1,6 @@
 import { DrawerClassKey } from "@material-ui/core/Drawer/Drawer";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { ClassNameMap } from "@material-ui/styles/withStyles/withStyles";
 import clsx from "clsx";
 import React from "react";
 import { Helmet } from "react-helmet-async";
@@ -17,7 +18,7 @@ interface LayoutProps {
 }
 
 interface LayoutClassesProps {
-  drawer?: Partial<Record<DrawerClassKey, string>>;
+  drawer?: Partial<ClassNameMap<DrawerClassKey>>;
 }
 
 const drawerWidth = 260;
@@ -25,6 +26,7 @@ const drawerWidth = 260;
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
+    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

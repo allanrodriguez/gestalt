@@ -1,7 +1,7 @@
-import MuiDrawer from "@material-ui/core/Drawer";
-import { DrawerClassKey } from "@material-ui/core/Drawer/Drawer";
+import MuiDrawer, { DrawerClassKey } from "@material-ui/core/Drawer/Drawer";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { ClassNameMap } from "@material-ui/styles/withStyles/withStyles";
 import clsx from "clsx";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import { selectDrawerOpen } from "../../layout-slice";
 
 interface DrawerProps {
   children?: React.ReactNode;
-  classes?: Partial<Record<DrawerClassKey, string>>;
+  classes?: Partial<ClassNameMap<DrawerClassKey>>;
   className?: string;
   width: number;
 }
@@ -25,7 +25,7 @@ const useStyles = makeStyles<Theme, DrawerProps>(() => ({
 }));
 
 export default function Drawer(props: DrawerProps): JSX.Element {
-  const classes = useStyles(props);
+  const classes = useStyles({ width: props.width });
   const isDrawerOpen = useSelector(selectDrawerOpen);
 
   return (
