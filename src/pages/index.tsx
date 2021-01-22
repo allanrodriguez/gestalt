@@ -19,6 +19,15 @@ import MonitorDrawer from "../components/monitor-drawer";
 import Upload from "../components/upload";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    height: `calc(100vh - 56px)`,
+    [`${theme.breakpoints.up("xs")} and (orientation: landscape)`]: {
+      height: `calc(100vh - 48px)`,
+    },
+    [theme.breakpoints.up("sm")]: {
+      height: `calc(100vh - 64px)`,
+    },
+  },
   drawerPaper: {
     background: "rgba(0, 0, 0, 0.18)",
   },
@@ -53,7 +62,9 @@ export default function Home(): JSX.Element {
       drawer={<MonitorDrawer />}
       menu={isImageUploaded && <HomeMenu />}
     >
-      {isImageUploaded ? <ImageEditor /> : <Upload />}
+      <div className={classes.container}>
+        {isImageUploaded ? <ImageEditor /> : <Upload />}
+      </div>
     </Layout>
   );
 }

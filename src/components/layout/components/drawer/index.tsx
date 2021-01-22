@@ -16,7 +16,6 @@ interface DrawerProps {
 
 const useStyles = makeStyles<Theme, DrawerProps>(() => ({
   drawer: {
-    flexShrink: 0,
     width: (props) => `${props.width}px !important`,
   },
   drawerPaper: {
