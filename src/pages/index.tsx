@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       height: `calc(100vh - 64px)`,
     },
+    overflow: "scroll",
   },
   drawerPaper: {
     background: "rgba(0, 0, 0, 0.18)",
