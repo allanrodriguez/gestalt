@@ -1,3 +1,4 @@
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,10 +8,19 @@ import {
 } from "./image-editor-slice";
 import { getUploadedImage } from "../../store";
 
+const useStyles = makeStyles(() => ({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+}));
+
 export default function ImageEditor() {
   const imageUrl = useSelector(selectImageUrl);
   const zoomLevel = useSelector(selectZoomLevel);
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   React.useEffect(() => {
     let imageLoaded = false;
@@ -28,13 +38,7 @@ export default function ImageEditor() {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <div className={classes.container}>
       <div>
         <img
           style={{

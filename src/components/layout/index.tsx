@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import Drawer from "./components/drawer";
 import Header from "./components/header";
 import { selectDrawerOpen } from "./layout-slice";
+import { drawerWidth } from "../../common/constants";
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -19,8 +20,6 @@ interface LayoutProps {
 interface LayoutClassesProps {
   drawer?: Partial<ClassNameMap<DrawerClassKey>>;
 }
-
-const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
   content: {

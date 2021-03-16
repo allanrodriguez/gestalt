@@ -5,6 +5,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Add } from "@material-ui/icons";
 import React from "react";
 import { useDispatch } from "react-redux";
+import { drawerWidth } from "../../common/constants";
 import Monitors from "../monitors";
 import MonitorDetailsDialog from "../monitor-details-dialog";
 import {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   list: {
     flexGrow: 1,
     marginTop: theme.spacing(2),
-    maxWidth: 260,
+    maxWidth: drawerWidth,
     minHeight: 0,
     overflow: "auto",
   },
