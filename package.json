@@ -20,11 +20,11 @@
     "clsx": "^1.1.1",
     "gatsby": "^2.24.91",
     "gatsby-plugin-material-ui": "^2.1.10",
-    "gatsby-plugin-react-helmet-async": "^1.1.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-helmet-async": "^1.0.7",
-    "react-redux": "^7.2.2"
+    "gatsby-plugin-react-helmet-async": "^1.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet-async": "^1.0.9",
+    "react-redux": "^7.2.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.5",
@@ -34,7 +34,7 @@
     "babel-preset-gatsby": "^0.11.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.1",
-    "prettier": "2.2.1"
+    "prettier": "^2.3.1"
   },
   "resolutions": {
     "lodash": "^4.17.20"
