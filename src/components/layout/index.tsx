@@ -23,25 +23,36 @@ interface LayoutClassesProps {
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    flexGrow: 1,
-    transition: theme.transitions.create("margin", {
+    gridRow: 2,
+    gridColumn: 2,
+  },
+  drawer: {
+    gridRowStart: 1,
+    gridRowEnd: 3,
+    gridColumn: 1,
+    width: 0,
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
   },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
+  drawerShift: {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    width: drawerWidth,
   },
-  headerBuffer: {
-    ...theme.mixins.toolbar,
+  header: {
+    gridRow: 1,
+    gridColumn: 2,
   },
   root: {
-    display: "flex",
+    display: "grid",
+    width: "100vw",
+    height: "100vh",
+    gridTemplateRows: "min-content auto",
+    gridTemplateColumns: "minmax(0, min-content) auto",
   },
 }));
 
@@ -58,22 +69,23 @@ export default function Layout(props: LayoutProps): JSX.Element {
         />
       </Helmet>
       <div className={classes.root}>
-        <Header drawer={props.drawer && true} drawerWidth={drawerWidth}>
-          {props.menu}
-        </Header>
+        <div className={classes.header}>
+          <Header drawer={props.drawer && true} drawerWidth={drawerWidth}>
+            {props.menu}
+          </Header>
+        </div>
         {props.drawer && (
-          <Drawer width={drawerWidth} classes={props.classes?.drawer}>
-            {props.drawer}
-          </Drawer>
+          <div
+            className={clsx(classes.drawer, {
+              [classes.drawerShift]: isDrawerOpen,
+            })}
+          >
+            <Drawer width={drawerWidth} classes={props.classes?.drawer}>
+              {props.drawer}
+            </Drawer>
+          </div>
         )}
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: isDrawerOpen,
-          })}
-        >
-          <div className={classes.headerBuffer} />
-          {props.children}
-        </main>
+        <main className={classes.content}>{props.children}</main>
       </div>
     </>
   );

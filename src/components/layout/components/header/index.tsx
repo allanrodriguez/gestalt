@@ -5,11 +5,10 @@ import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/icons/Menu";
-import clsx from "clsx";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import logo from "./gestalt-logo-web-black.svg";
-import { selectDrawerOpen, toggleDrawer } from "../../layout-slice";
+import { toggleDrawer } from "../../layout-slice";
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -18,20 +17,6 @@ interface HeaderProps {
 }
 
 const useStyles = makeStyles<Theme, HeaderProps>((theme) => ({
-  appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: (props) => `calc(100% - ${props.drawerWidth}px)`,
-    marginLeft: (props) => props.drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
   drawerButton: {
     color: theme.palette.text.primary,
     marginRight: theme.spacing(2),
@@ -43,20 +28,13 @@ const useStyles = makeStyles<Theme, HeaderProps>((theme) => ({
 }));
 
 export default function Header(props: HeaderProps): JSX.Element {
-  const isDrawerOpen = useSelector(selectDrawerOpen);
   const dispatch = useDispatch();
   const classes = useStyles(props);
 
   const onMenuButtonClick = () => dispatch(toggleDrawer());
 
   return (
-    <AppBar
-      className={clsx(classes.appBar, {
-        [classes.appBarShift]: isDrawerOpen,
-      })}
-      elevation={0}
-      position="fixed"
-    >
+    <AppBar elevation={0} position="static">
       <Toolbar>
         {props.drawer && (
           <IconButton
