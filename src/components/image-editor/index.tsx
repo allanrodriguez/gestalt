@@ -6,13 +6,20 @@ import {
   selectZoomLevel,
   setImageUrl,
 } from "./image-editor-slice";
+import { uploadedImageMargin } from "../../common/constants";
 import { getUploadedImage } from "../../store";
 
 const useStyles = makeStyles(() => ({
   container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: "inline-block",
+    marginLeft: `${uploadedImageMargin}%`,
+    marginRight: `${uploadedImageMargin}%`,
+    height: "100%",
+    "&::before, &::after": {
+      display: "block",
+      content: `""`,
+      height: `${uploadedImageMargin}%`,
+    },
   },
 }));
 

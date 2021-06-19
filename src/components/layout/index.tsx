@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     gridRow: 2,
     gridColumn: 2,
+    height: "100%",
+    width: "100%",
   },
   drawer: {
     gridRowStart: 1,
@@ -51,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
     width: "100vw",
     height: "100vh",
-    gridTemplateRows: "min-content auto",
-    gridTemplateColumns: "minmax(0, min-content) auto",
+    gridTemplateRows: "min-content minmax(0, 1fr)",
+    gridTemplateColumns: "minmax(0, min-content) minmax(0, 1fr)",
   },
 }));
 

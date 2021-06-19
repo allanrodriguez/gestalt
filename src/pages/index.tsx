@@ -6,10 +6,8 @@ import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import ClearRounded from "@material-ui/icons/ClearRounded";
 import DoneRounded from "@material-ui/icons/DoneRounded";
-import clsx from "clsx";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { drawerWidth } from "../common/constants";
 import ImageEditor from "../components/image-editor";
 import {
   selectImageUploaded,
@@ -17,36 +15,14 @@ import {
   setZoomLevel,
 } from "../components/image-editor/image-editor-slice";
 import Layout from "../components/layout";
-import { selectDrawerOpen } from "../components/layout/layout-slice";
 import MonitorDrawer from "../components/monitor-drawer";
 import Upload from "../components/upload";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     overflow: "auto",
-    position: "absolute",
-    top: 56,
-    [`${theme.breakpoints.up("xs")} and (orientation: landscape)`]: {
-      top: 48,
-    },
-    [theme.breakpoints.up("sm")]: {
-      top: 64,
-    },
-    left: 0,
-    bottom: 0,
-    right: 0,
-    whiteSpace: "nowrap",
-    transition: theme.transitions.create("left", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  containerShift: {
-    transition: theme.transitions.create("left", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    left: drawerWidth,
+    width: "100%",
+    height: "100%",
   },
   drawerPaper: {
     background: "rgba(0, 0, 0, 0.18)",
@@ -69,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
 const zoomLevels = [25, 50, 75, 100, 125, 150, 200, 300, 400];
 
 export default function Home(): JSX.Element {
-  const isDrawerOpen = useSelector(selectDrawerOpen);
   const isImageUploaded = useSelector(selectImageUploaded);
   const classes = useStyles();
 
@@ -83,11 +58,7 @@ export default function Home(): JSX.Element {
       drawer={<MonitorDrawer />}
       menu={isImageUploaded && <HomeMenu />}
     >
-      <div
-        className={clsx(classes.container, {
-          [classes.containerShift]: isDrawerOpen,
-        })}
-      >
+      <div className={classes.container}>
         {isImageUploaded ? <ImageEditor /> : <Upload />}
       </div>
     </Layout>
