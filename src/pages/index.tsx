@@ -17,6 +17,7 @@ import {
 import Layout from "../components/layout";
 import MonitorDrawer from "../components/monitor-drawer";
 import Upload from "../components/upload";
+import { removeUploadedImage } from "../store";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -69,7 +70,10 @@ function HomeMenu() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const onCancelButtonClick = () => dispatch(setImageUploaded(false));
+  const onCancelButtonClick = async () => {
+    await removeUploadedImage();
+    dispatch(setImageUploaded(false));
+  };
   const onZoomSelectChange = (
     e: React.ChangeEvent<{
       name?: string;
