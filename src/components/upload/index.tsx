@@ -54,21 +54,16 @@ const useStyles = makeStyles<Theme, DropzoneRootProps>((theme) => {
   };
 });
 
-export default function Upload() {
+const Upload: React.FC = () => {
   const dispatch = useDispatch();
-  const {
-    getRootProps,
-    getInputProps,
-    isDragAccept,
-    isDragReject,
-    isFocused,
-  } = useDropzone({
-    accept: "image/*",
-    maxFiles: 1,
-    onDropAccepted: async (files) => {
-      if (await setUploadedImage(files[0])) dispatch(setImageUploaded(true));
-    },
-  });
+  const { getRootProps, getInputProps, isDragAccept, isDragReject, isFocused } =
+    useDropzone({
+      accept: "image/*",
+      maxFiles: 1,
+      onDropAccepted: async (files) => {
+        if (await setUploadedImage(files[0])) dispatch(setImageUploaded(true));
+      },
+    });
   const classes = useStyles({ isDragAccept, isDragReject, isFocused });
 
   return (
@@ -83,4 +78,6 @@ export default function Upload() {
       </div>
     </div>
   );
-}
+};
+
+export default Upload;

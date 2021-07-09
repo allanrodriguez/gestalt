@@ -39,7 +39,7 @@ const useStyles = makeStyles<Theme, StyleProps>(() => ({
   },
 }));
 
-export default function ImageEditor() {
+const ImageEditor: React.FC = () => {
   const imageUrl = useSelector(selectImageUrl);
   const initialWidth = useSelector(selectImageWidth);
   const zoomLevel = useSelector(selectZoomLevel);
@@ -47,26 +47,27 @@ export default function ImageEditor() {
   const classes = useStyles({ initialWidth, zoomLevel });
 
   React.useEffect(() => {
+    let effectImageUrl: string;
+
     getUploadedImage().then((image) => {
-      dispatch(setImageUrl(URL.createObjectURL(image)));
+      effectImageUrl = URL.createObjectURL(image);
+      dispatch(setImageUrl(effectImageUrl));
     });
 
     return () => {
-      if (!imageUrl) return;
-      URL.revokeObjectURL(imageUrl);
+      if (effectImageUrl) URL.revokeObjectURL(effectImageUrl);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={classes.container}>
       <img
+        alt=""
         className={classes.image}
         onLoad={(e) => {
           const img = e.target as HTMLImageElement;
           if (img) {
-            console.log("loaded");
             dispatch(setImageWidth(img.width));
-            console.log(img.width);
             img.scrollIntoView({
               block: "center",
               inline: "center",
@@ -77,4 +78,6 @@ export default function ImageEditor() {
       />
     </div>
   );
-}
+};
+
+export default ImageEditor;

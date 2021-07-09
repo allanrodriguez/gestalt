@@ -1,12 +1,8 @@
 import React from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { render as rtlRender } from "@testing-library/react";
+import { render as rtlRender, RenderResult } from "@testing-library/react";
 import { initialState as reducerInitialState, reducer } from "../state";
-
-interface WrapperProps {
-  children: React.ReactNode;
-}
 
 function render(
   ui: React.ReactElement,
@@ -15,10 +11,10 @@ function render(
     store = createStore(reducer, initialState),
     ...renderOptions
   } = {}
-) {
-  function Wrapper({ children }: WrapperProps) {
+): RenderResult {
+  const Wrapper: React.FC = ({ children }) => {
     return <Provider store={store}>{children}</Provider>;
-  }
+  };
 
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }

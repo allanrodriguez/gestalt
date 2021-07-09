@@ -37,19 +37,19 @@ const slice = createSlice({
   },
 });
 
-export function selectImageUploaded(state: RootState) {
+export function selectImageUploaded(state: RootState): boolean {
   return state.imageEditor.isUploaded;
 }
 
-export function selectImageUrl(state: RootState) {
+export function selectImageUrl(state: RootState): string {
   return state.imageEditor.url;
 }
 
-export function selectImageWidth(state: RootState) {
+export function selectImageWidth(state: RootState): number {
   return state.imageEditor.initialWidthPx;
 }
 
-export function selectZoomLevel(state: RootState) {
+export function selectZoomLevel(state: RootState): number {
   return state.imageEditor.zoomLevel;
 }
 
