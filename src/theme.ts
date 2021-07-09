@@ -1,6 +1,6 @@
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import createTheme from "@material-ui/core/styles/createTheme";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: `#ffab91`,
@@ -21,7 +21,7 @@ const theme = createMuiTheme({
   },
 });
 
-const darkTheme = createMuiTheme({
+const darkTheme = createTheme({
   palette: {
     type: "dark",
     background: {

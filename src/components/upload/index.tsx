@@ -1,7 +1,7 @@
 import React from "react";
 import { DropzoneRootProps, useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import { Theme } from "@material-ui/core/styles/createTheme";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import AddPhotoAlternateRounded from "@material-ui/icons/AddPhotoAlternateRounded";
 import { setUploadedImage } from "../../store";
